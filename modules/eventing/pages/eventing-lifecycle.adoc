@@ -1,10 +1,9 @@
 = The Eventing Lifecycle
-:description: This page shows how to add a new Eventing Function and briefly explores the Eventing Lifecycle.
 :page-edition: Enterprise Edition
 :page-aliases: eventing-adding-function
 
 [abstract]
-{description}
+This page shows how to add a new Eventing Function and briefly explores the Eventing Lifecycle.
 
 [#eventing_lifecycle_image]
 image::lifecycle_overview_notitle.png[,%100]
