@@ -1,9 +1,8 @@
 = Function: dateToEpochConversion
-:description: pass:q[Recursively change String Dates into Unix Epoch timestamps.]
 :page-edition: Enterprise Edition
 :tabs:
 
-*Goal*: {description}
+*Goal*: Recursively change String Dates into Unix Epoch timestamps.
 
 * This function *dateToEpochConversion* will recursively convert string dates to a UNIX Epoch timestamp.
 * The sample can convert to either seconds from Epoch or milliseconds from Epoch.
