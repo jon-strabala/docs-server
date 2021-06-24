@@ -1,9 +1,8 @@
 = Function: Basic Binary KV
-:description: pass:q[Show Basic Bucket Op Binary Write and Read.]
 :page-edition: Enterprise Edition
 :tabs:
 
-*Goal*: {description}
+*Goal*: Show Basic Bucket Op Binary Write and Read.
 
 * This function *basicBinaryKV* demonstrates creating, marshalling and unmarshalling binary docs.
 * Requires a metadata bucket and a source bucket aliased to "src_bkt" in mode read+write.
