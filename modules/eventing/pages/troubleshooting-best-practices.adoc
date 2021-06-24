@@ -22,7 +22,6 @@ Only valid Functions get deployed. Using the _log()_ option within a _try-catch 
 
 During runtime, Application logs, by default, do not capture any handler code exceptions. To log exceptions, it is recommended to encapsulate your code in a _try-catch_ block.
 
-
 A sample _try-catch_ block is provided for reference:
 
 ----
