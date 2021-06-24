@@ -1,9 +1,8 @@
 = Function: Advanced Binary KV
-:description: pass:q[Show and Advanced Accessor Binary Write.]
 :page-edition: Enterprise Edition
 :tabs:
 
-*Goal*: {description}
+*Goal*: Show and Advanced Accessor Binary Write.
 
 * This function *advancedBinaryKV* demonstrates creating, marshalling and unmarshalling binary docs.
 * Requires a metadata bucket, a source bucket, and a destination bucket aliased to "dst_bkt" in mode read+write.
