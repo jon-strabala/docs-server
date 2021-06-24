@@ -1,9 +1,8 @@
 = Function: cascadeKvDeleteWithDoc
-:description: pass:q[Perform a cascade delete operation with just the KV service.]
 :page-edition: Enterprise Edition
 :tabs:
 
-*Goal*: {description}
+*Goal*: Perform a cascade delete operation with just the KV service.
 
 * This function *cascadeKvDeleteWithDoc* merely demonstrates two different Eventing solutions
 ** A cascade delete using just KV or the Data Service.
