@@ -1,9 +1,8 @@
 = Delete v Expiry
-:description: pass:q[Differentiate between a deletion or an expiration.]
 :page-edition: Enterprise Edition
 :tabs:
 
-*Goal*: {description}
+*Goal*: Differentiate between a deletion or an expiration
 
 *Implementation*: 
 
