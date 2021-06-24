@@ -1,9 +1,8 @@
 = Function: Advanced INCREMENT operation
-:description: pass:q[Perform the Advanced INCREMENT operation where Eventing interacts with the Data service.]
 :page-edition: Enterprise Edition
 :tabs:
 
-*Goal*: {description}
+*Goal*: Perform the Advanced INCREMENT operation where Eventing interacts with the Data service.
 
 * This function *advancedIncrementOp* merely demonstrates the Advanced INCREMENT operation.
 * Requires a metadata bucket, a source bucket.
