@@ -1,9 +1,8 @@
 = Function: Simple Timer
-:description: pass:q[Create a Simple Timer that triggers once per mutation.]
 :page-edition: Enterprise Edition
 :tabs:
 
-*Goal*: {description}
+*Goal*: Create a Simple Timer that triggers in the future on each mutation.
 
 * This function *simpleTimer* merely demonstrates a basic Evening Timer.
 * Requires a metadata bucket and a source bucket.
