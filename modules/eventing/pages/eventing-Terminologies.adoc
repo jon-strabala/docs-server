@@ -71,7 +71,9 @@ Based on the `Feed Boundary` setting, when a handler is deployed it can either p
 
 === Keyspaces
 
-A keyspace is a fully qualified path to a collection of the form "bucket-name.scope-name.collection-name". For backward comptibility a keyspace can also be of the form "bucket-name._default._default" which is the form of a 6.6 bucket upgraded to 7.0.
+A keyspace is a fully qualified path to a collection of the form "bucket-name.scope-name.collection-name". For backward comptibility a keyspace can also be of the form "bucket-name._default._default" which is the form of a 6.6 bucket upgraded to 7.0.  The two terms keyspace and collection can be considered equivelent.
+
+=== Eventing Keyspaces
 
 There are two keyspaces used by every Eventing Function or handler: the Listen To Location (the Eventing source) collection and the Eventing Storage (the Eventing metadata) collection.  
 
