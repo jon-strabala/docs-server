@@ -69,9 +69,11 @@ Feed Boundary is a time or progress milestone used during an Eventing Function o
 
 Based on the `Feed Boundary` setting, when a handler is deployed it can either process all data mutations available in the cluster (`Everything`) or  process only future data mutations (`From now`) that occur post deployment. However, once deployed you may Pause/Resume a handler in this case; the Feed Boundary is a checkpoint of the Function's actual progress such that no mutations are reprocessed or lost. 
 
-=== Collections
+=== Keyspaces or Collections
 
-There are two key collections used by every Eventing Function or handler: the Listen To Location (the Eventing source) collection and the Eventing Storage (the Eventing metadata) collection.
+A keyspace is a fully qualified path to a collection of the form "bucket-name.scope-name.collection-name". For backward comptibility a keyspace can also be of the form "bucket-name._default._default".
+
+There are two keyspaces used by every Eventing Function or handler: the Listen To Location (the Eventing source) collection and the Eventing Storage (the Eventing metadata) collection.  
 
 *Listen To Location (the Eventing source)*
 
@@ -151,7 +153,7 @@ An Eventing Function can have no binding, one binding, or several bindings.  The
 
 Bucket aliases allow JavaScript handlers to access Couchbase KV collections from the Data Service or KV. The keyspaces (bucket.scope.collection) are then accessible by the bound name as a JavaScript map in the global space of the handler. 
 
-You can add bucket aliases via the 'Bucket alias' choice then entering a tuple of: alias-name, keyspace of the form bucket-name.scope-name.collection-name, and an access level. Where the alias-name that you can use to refer to the keyspace or collection from your Handler code; the keyspace is the actual path to a collection in the cluster; and the access level to the keyspace is either 'read only' or 'read and write'.
+You can add bucket aliases via the 'Bucket alias' choice then entering a tuple of: alias-name, keyspace, and an access level. Where the alias-name that you can use to refer to the keyspace or collection from your Handler code; the keyspace is the full path to a collection in the cluster; and the access level to the keyspace is either 'read only' or 'read and write'.
 
 NOTE: One or more Bucket alias bindings (or Bucket aliases) are mandatory when your handler code performs any collection related operations against the Data Service.
 
