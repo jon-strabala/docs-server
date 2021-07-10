@@ -10,7 +10,7 @@ Couchbase Functions inherit support for most ECMAScript constructs by using Goog
 However, to support the ability to shard and scale Function-execution automatically, some capabilities have been removed.
 Additionally, to optimize language-utilization of the server environment, some new constructs have been added.
 
-NOTE: While every effort is made to ensure the accuracy of the content of the Eventing documentation herein, it should be noted that the controlling technical document is the https://github.com/couchbase/eventing/blob/master/docs/specification-66.pdf[Couchbase 6.6 Eventing Specification] available on GitHub.
+NOTE: While every effort is made to ensure the accuracy of the content of the Eventing documentation herein, it should be noted that the controlling technical document is the https://github.com/couchbase/eventing/blob/master/docs/specification-70.pdf[Couchbase 7.0 Eventing Specification] available on GitHub.
 
 [#removed-lang-features]
 == Removed Language Features
@@ -35,10 +35,12 @@ function OnUpdate(doc, meta) {
 }
 ----
 
+Note the use of 'Constant alias' bindings in the Function's settings can be used to provide global constants accessible within a Function's JavaScript.  For example you might have a Constant alias of _debug_ with a value of _true_ (or _false_) to control verbose logging this would behaves just like adding a statement `const debug = true;` at the beginning of your JavaScript code.
+
 [#asynchrony]
 === Asynchrony
 
-Asynchrony, particularly asynchronous callbacks, to be useful needs to retain access to their parent scope. As such asynchrony forms a node specific, long-running state that prevents the capture of the entire state in the persistence providers. Therefore, Function handlers are restricted to executing as short-running, straight-line code, without sleep and wakeups. Limited asynchrony is added back through time observers. Time observers are designed specifically not to make the state node specific.
+Asynchrony, particularly asynchronous callbacks, to be useful needs to retain access to their parent scope. As such asynchrony forms a node specific, long-running state that prevents the capture of the entire state in the persistence providers. Therefore, Function handlers are restricted to executing as short-running, straight-line code, without sleep and wakeups. 
 
 [source,javascript]
 ----
@@ -46,6 +48,8 @@ function OnUpdate(doc, meta) {
   setTimeout(function(){}, 300);     // Not allowed - asynchronous flow.
 }
 ----
+
+Limited asynchrony is added back through time observers (or Timers). Time observers are designed specifically not to make the state node specific.
 
 [#browser_extensions]
 === Browser and other Extensions
@@ -68,13 +72,13 @@ function OnUpdate(doc, meta) {
 
 The following constructs have been added:
 
-* <<bucket_accessors,Basic Bucket Accessors>>
-* <<advanced_bucket_accessors,Advanced Bucket Accessors>>
+* <<bucket_accessors,Basic Keyspace Accessors>>
+* <<advanced_bucket_accessors,Advanced Keyspace Accessors>>
 * <<logging,Logging>>
 * <<n1ql_statements,N1QL Statements>>
 
 [#bucket_accessors]
-=== Basic Bucket Accessors
+=== Basic Keyspace Accessors
 
 Couchbase buckets, when bound to a Function, appear as a global JavaScript map.
 The map operations such as get, set and delete are exposed to the Data Service providers get, set, and delete operations respectively.
@@ -106,16 +110,16 @@ This deletes the provided key from the KV bucket the variable is bound to. If th
 //[.status]#Couchbase Server 6.6.1#
 
 [#advanced_bucket_accessors]
-=== Advanced Bucket Accessors [.status]#Couchbase Server 6.6.1#
+=== Advanced Keyspace Accessors [.status]#Couchbase Server 6.6.1#
 
 The following advanced bucket accessors have been added to expose a richer set of options and operators.  
-Unlike the basic bucket accessors these operations have non-trivial argument sets and return values for complete details refer to xref:eventing-advanced-bucket-accessors.adoc[Advanced Bucket Accessors Details].
+Unlike the basic bucket accessors these operations have non-trivial argument sets and return values for complete details refer to xref:eventing-advanced-keyspace-accessors.adoc[Advanced Keyspace Accessors Details].
 
 [#advanced-get-op]
 * *The Advanced GET operation*: _result = couchbase.get(binding, meta)_
 +
 This operation allows reading a document from the bucket with an ability to specify the CAS value to be matched during the read.
-For more information see xref:eventing-advanced-bucket-accessors.adoc#advanced-get-op[advanced GET operation].
+For more information see xref:eventing-advanced-keyspace-accessors.adoc#advanced-get-op[advanced GET operation].
 
 [#advanced-insert-op]
 
@@ -124,7 +128,7 @@ For more information see xref:eventing-advanced-bucket-accessors.adoc#advanced-g
 This operation allows creating a fresh document in the bucket.
 This operation will fail if the document with the specified key already exists. 
 It allows specifying an expiration time (or TTL) to be set on the document.
-For more information see xref:eventing-advanced-bucket-accessors.adoc#advanced-insert-op[advanced INSERT operation].
+For more information see xref:eventing-advanced-keyspace-accessors.adoc#advanced-insert-op[advanced INSERT operation].
 
 [#advanced-upsert-op]
 
@@ -133,7 +137,7 @@ For more information see xref:eventing-advanced-bucket-accessors.adoc#advanced-i
 This operation allows updating an existing document in the bucket, or if absent, creating a fresh document with the specified key.
 The operation does not allow specifying CAS (it will silently ignore it).
 It also allows specifying an expiration time (or TTL) to be set on the document.
-For more information see xref:eventing-advanced-bucket-accessors.adoc#advanced-upsert-op[advanced UPSERT operation].
+For more information see xref:eventing-advanced-keyspace-accessors.adoc#advanced-upsert-op[advanced UPSERT operation].
 
 [#advanced-replace-op]
 
@@ -143,7 +147,7 @@ This operation replaces an existing document in the bucket
 This operation will fail if the document with the specified key does not exist. 
 This operation allows specifying a CAS value that must be matched as a pre-condition before proceeding with the operation. 
 It also allows specifying an expiration time (or TTL) to be set on the document. 
-For more information see xref:eventing-advanced-bucket-accessors.adoc#advanced-replace-op[advanced REPLACE operation].
+For more information see xref:eventing-advanced-keyspace-accessors.adoc#advanced-replace-op[advanced REPLACE operation].
 
 [#advanced-delete-op]
 
@@ -151,14 +155,14 @@ For more information see xref:eventing-advanced-bucket-accessors.adoc#advanced-r
 +
 This operation allows deleting a document in the bucket specified by key.
 Optionally, a CAS value may be specified which will be matched as a pre-condition to proceed with the operation.
-For more information see xref:eventing-advanced-bucket-accessors.adoc#advanced-delete-op[advanced DELETE operation].
+For more information see xref:eventing-advanced-keyspace-accessors.adoc#advanced-delete-op[advanced DELETE operation].
 
 [#advanced-increment-op]
 
 * *The Advanced INCREMENT operation*: _result = couchbase.incrment(binding, meta)_
 +
 This operation atomically increments the field _"count"_ in the specified document.
-For more information see xref:eventing-advanced-bucket-accessors.adoc#advanced-increment-op[advanced INCREMENT operation].
+For more information see xref:eventing-advanced-keyspace-accessors.adoc#advanced-increment-op[advanced INCREMENT operation].
 +
 The document must have the below structure:
 +
@@ -178,7 +182,7 @@ Due to limitations in KV engine API, this operation cannot currently manipulate 
 * *The Advanced DECREMENT operation*: _result = couchbase.decrement(binding, meta)_
 +
 This operation atomically decrements the field _"count"_ in the specified document.
-For more information see xref:eventing-advanced-bucket-accessors.adoc#advanced-decrement-op[advanced DECREMENT operation].
+For more information see xref:eventing-advanced-keyspace-accessors.adoc#advanced-decrement-op[advanced DECREMENT operation].
 +
 The document must have the below structure:
 +
