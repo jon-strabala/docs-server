@@ -6,9 +6,7 @@ They utilize the same bucket bindings defined in the handler as _Basic Keyspace 
 
 NOTE: The xref:eventing-language-constructs.adoc#bucket_accessors[Basic Keyspace Accessors] are much easier to use, having a trivial API, and are also a bit faster than the corresponding Advanced Keyspace Accessors.
 
-//****
-[.status]#Couchbase Server 6.6.1# 
-The following Advanced Keyspace Accessors have been added:
+The following Advanced Keyspace Accessors are supported:
 
 * <<advanced-get-op,The Advanced GET operation>> 
 * <<advanced-insert-op,The Advanced INSERT operation>>
@@ -18,7 +16,7 @@ The following Advanced Keyspace Accessors have been added:
 * <<advanced-increment-op,The Advanced INCREMENT operation>>
 * <<advanced-decrement-op,The Advanced DECREMENT operation>>
 
-These seven (7) new Keyspace Accessors make it possible to utilize and leverage CAS directly and/or set a document expiration (or TTL) in the Data Service (or KV) via Eventing plus perform distributed atomic counter operations. 
+These seven (7) Advanced Keyspace Accessors make it possible to utilize and leverage CAS directly and/or set a document expiration (or TTL) in the Data Service (or KV) via Eventing plus perform distributed atomic counter operations. 
 
 For example rather than blindly relying on he Basic Keyspace Accessors for an upsert like operation ‘src_bkt[id_str] = some_doc’ the Advanced Accessors allow you to resolve contention (or possible contention) with JavaScript driven logic in your Eventing Function.
 
