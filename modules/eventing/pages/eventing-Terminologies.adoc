@@ -52,7 +52,7 @@ Similarly, the KV data engine deduplicates multiple mutations made to any indivi
 
 === Recursive Mutation
 
-An abbreviation of convenience of the term Potentially Recursive Mutation. When a handler manipulates documents in a bucket that also serves as the source of mutations to this or any other handler, a write originated by a handler will cause a mutation to be seen by itself or another handler. These are called potentially recursive mutations.  
+An abbreviation of convenience of the term Potentially Recursive Mutation. When a handler manipulates documents in a keyspace that also serves as the source of mutations to this or any other handler, a write originated by a handler will cause a mutation to be seen by itself or another handler. These are called potentially recursive mutations.  
 
 [#json_number_percision]
 === JSON Number Precision
@@ -69,15 +69,15 @@ Feed Boundary is a time or progress milestone used during an Eventing Function o
 
 Based on the `Feed Boundary` setting, when a handler is deployed it can either process all data mutations available in the cluster (`Everything`) or  process only future data mutations (`From now`) that occur post deployment. However, once deployed you may Pause/Resume a handler in this case; the Feed Boundary is a checkpoint of the Function's actual progress such that no mutations are reprocessed or lost. 
 
-=== Keyspaces or Collections
+=== Keyspaces
 
-A keyspace is a fully qualified path to a collection of the form "bucket-name.scope-name.collection-name". For backward comptibility a keyspace can also be of the form "bucket-name._default._default".
+A keyspace is a fully qualified path to a collection of the form "bucket-name.scope-name.collection-name". For backward comptibility a keyspace can also be of the form "bucket-name._default._default" which is the form of a 6.6 bucket upgraded to 7.0.
 
 There are two keyspaces used by every Eventing Function or handler: the Listen To Location (the Eventing source) collection and the Eventing Storage (the Eventing metadata) collection.  
 
 *Listen To Location (the Eventing source)*
 
-Couchbase Eventing Functions use a collection as the source of data mutations. This collection is referred to as the Eventing source. This source collection can be either Couchbase or Ephemeral bucket type. However, memcached bucket types are not supported.
+Couchbase Eventing Functions use a collection as the source of data mutations. This collection is referred to as the Eventing source. This source collection can be either Couchbase or Ephemeral keyspace type. However, memcached keyspace types are not supported.
 
 When you are creating a Function, you need to specify a source collection. The handler code watches this collection via DCP to both receive and track data mutations.
 
@@ -87,7 +87,7 @@ When a source collection is deleted, all deployed (or paused) Functions associat
 
 In the course of processing the handler code, documents can be mutated in different collections. For understanding purposes, these keyspaces can be termed as destination collections which are bound to the Function via Bucket aliases.
 
-At times, the handler code itself can trigger data mutations on documents via the Data Service (KV) via either Basic Accessors or Advanced Accessors. 
+At times, the handler code itself can trigger data mutations on documents via the Data Service (KV) via either Basic Keyspace Accessors or Advanced Keyspace Accessors. 
 If the handler code directly modifies documents in the source collection, the Eventing Service will suppress the mutation back to the handler making the mutation. 
 When implementing multiple Functions it is possible to create infinite recursions, however the Eventing Service by default will prevent deploying Functions that would result in recursion loops.  It should be noted that not all recursion loops can be detected nor are all recursion loops wrong -- the default recursion checks can be disabled. For more detail on cyclic generation of data changes, refer to xref:troubleshooting-best-practices.adoc#cyclicredun[Bucket Allocation Considerations].
 
@@ -130,7 +130,7 @@ This controls the consistency level for N1QL statements, but can be set on a per
 Allows the handler to be scaled up (or vertical scaling). Each worker process supports two fixed threads of execution, however this setting is limited to a maximum of 64 for system optimization purposes. The system automatically generates a warning message if the number of workers exceeds a set threshold based upon cluster resources, however, in this case the handler can still be deployed.
 * *Language compatibility*: The language version of the handler for backward compatibility.
 + 
-If the semantics of a language construct change in any given release the “Language compatibility” setting will ensure an older handler will continue to see the runtime behavior that existed at the time it was authored, until such behavior is deprecated and removed. For example, accessing non-existent items from a bucket returns undefined in 6.5.0, while in 6.0.0 an exception is thrown.(Note 6.0.0, 6.5.0, and 6.6.2 are the only currently defined versions.)
+If the semantics of a language construct change in any given release the “Language compatibility” setting will ensure an older handler will continue to see the runtime behavior that existed at the time it was authored, until such behavior is deprecated and removed. For example, accessing non-existent items from a keyspace returns undefined in 6.5.0, while in 6.0.0 an exception is thrown.(Note 6.0.0, 6.5.0, and 6.6.2 are the only currently defined versions.)
 +
 Only a Function with “language compatibility” of 6.6.2 in its settings will pass binary documents to the OnUpdate(doc,meta) handler. Earlier “Language compatibility” values of 6.0.0 and 6.5.0 will filter all binary documents out of the DCP mutation stream.
 +
@@ -145,7 +145,7 @@ Eventing Timers can store and access a context which can be any JSON document, t
 [#section_mzd_l1p_m2b]
 === Bindings
 
-A binding is a construct that allows separating environment specific variables (example: bucket names, external endpoint URLs plus credentials, or global constants) from the handler source code. It provides a level of indirection between environment specific artifacts to symbolic names, to help moving a handler definition from development to production environments without changing code. Binding names must be valid JavaScript identifiers and must not conflict with any built-in types.
+A binding is a construct that allows separating environment specific variables (example: keyspace names, external endpoint URLs plus credentials, or global constants) from the handler source code. It provides a level of indirection between environment specific artifacts to symbolic names, to help moving a handler definition from development to production environments without changing code. Binding names must be valid JavaScript identifiers and must not conflict with any built-in types.
 
 An Eventing Function can have no binding, one binding, or several bindings.  There are three distinct types of bindings:
 
@@ -171,7 +171,7 @@ You can add URL bindings via the 'URL alias' choice then entering the following:
 
 These bindings are utilized by the Function's JavaScript handler code as global variables. 
 
-You can add URL bindings via the 'Constant alias' choice then entering an alias-name and value. The value can be either an integer, decimal number, string, boolean, or a JSON object.  For example you might have an alias or _debug_ with a value of either _true_ or _false_ to control verbose logging.
+You can add URL bindings via the 'Constant alias' choice then entering an alias-name and value. The value can be either an integer, decimal number, string, boolean, or a JSON object.  For example you might have an alias of _debug_ with a value of _true_ (or _false_) to control verbose logging this would behaves just like adding a statement `const debug = true;` at the beginning of your JavaScript code.
 
 == Operations
 
@@ -185,7 +185,7 @@ This operation activates a handler. Source validations are performed, and only v
 
 Deployment for DCP observer (or Feed Boundary) has two variations controlled by the setting of the handler's "Deployment Feed Boundary":
 
-* Everything: The handler will see a deduplicated history of all documents, ending with the current value of each document. Hence, the Handler will see every document in the bucket at least once.
+* Everything: The handler will see a deduplicated history of all documents, ending with the current value of each document. Hence, the Handler will see every document in the keyspace at least once.
 
 * From now: The handlers will see mutations from current time. In other words, the handler will see only documents that mutate after it is deployed.
 
