@@ -577,4 +577,4 @@ During the Function deployment step, when the system validates the handler code,
 
 Reserved words as a property bindings value
 
-image::reserved-words-6_5.png[,642]
+image::reserved-words-7_0.png[,642]
