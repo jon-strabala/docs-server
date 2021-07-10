@@ -106,11 +106,8 @@ This sets the provided JavaScript value into the KV bucket the variable is bound
 This deletes the provided key from the KV bucket the variable is bound to. If the object does not exist, this call is treated as a no-op. This operation throws an exception if the underlying bucket DELETE operation fails with an unexpected error.
 
 
-//****
-//[.status]#Couchbase Server 6.6.1#
-
 [#advanced_bucket_accessors]
-=== Advanced Keyspace Accessors [.status]#Couchbase Server 6.6.1#
+=== Advanced Keyspace Accessors
 
 The following advanced bucket accessors have been added to expose a richer set of options and operators.  
 Unlike the basic bucket accessors these operations have non-trivial argument sets and return values for complete details refer to xref:eventing-advanced-keyspace-accessors.adoc[Advanced Keyspace Accessors Details].
@@ -484,7 +481,7 @@ function OnUpdate(doc, meta) {
 === OnDelete Handler
 
 This handler gets called when a document is deleted or removed due to an expiry.
-The handler listens to mutations (deletions or expirations) in the associated source Bucket.  As of release 6.6.0 it is now possible to determine if the document was deleted or expired. This is accomplished via the optional argument "options" -- a JavaScript map object with a boolean entry named 'expired'.
+The handler listens to mutations (deletions or expirations) in the associated source Bucket.  It became possible to determine if the document was deleted or expired. This is accomplished via the optional argument "options" -- a JavaScript map object with a boolean property named 'expired'.
 
 In this handler the following limitation exists. This limitation arises due to KV engine design choices and may be revisited in the future:
 
