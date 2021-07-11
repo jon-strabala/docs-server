@@ -11,11 +11,11 @@ image::lifecycle_overview_notitle.png[,%100]
 This is a quick introduction to Eventing via creating a simple Eventing Handler and subsequently exercising the Eventing 
 Handler's functionality and operations across its typical lifecycle. For a deeper insight refer to the more detailed xref:eventing-examples.adoc[Eventing Examples].
 
-*Prerequisites*: In order to show the basic life cycle of an Eventing Function, we need a source bucket and a metadata bucket.
-You must have a metadata bucket, typically called *metadata*, to be used solely by Eventing -- if it is missing, create it with a minimum size of 100MB.
-For the source bucket we will use the *beer-sample* sample document set. 
+*Prerequisites*: In order to show the basic life cycle of an Eventing Function, we need a Listen To Location (a source keyspace) and an Eventing storage keyspace.
+You must have an Eventing storage keyspace, typically called *metadata*, to be used solely by Eventing -- if it is missing, create it with a minimum size of 100MB.
+For the source keyspace we will use the *beer-sample._default._default* sample document set. 
 
-If you don’t already have the sample bucket *beer-sample* listed in the *Couchbase Web Console* > *Buckets* page you can load this document set as follows:
+If you don’t already have the sample bucket *beer-sample* (it shuld have a scope of _default and a collection of _default) listed in the *Couchbase Web Console* > *Buckets* page you can load this document set as follows:
 ** Access the *Couchbase Web Console* > *Settings* page
 ** Select the *Sample Buckets* in the upper right banner. 
 ** Check *beer-sample* checkbox.
@@ -37,22 +37,23 @@ The *ADD FUNCTION* dialog enables the developer to provide the following informa
 |===
 | *Elements* | *Description*
 
-| Source Bucket
-| The name of a bucket currently defined on the cluster.
+| Listen To Location (the source keyspace or collection)
+| The name of a collection currently defined on the cluster.
 
-For more information on creating buckets, refer to xref:manage:manage-buckets/create-bucket.adoc[Create a Bucket].
+// TODO7X - need to check/fix this (buckets, scopes, collections)
+For more information on creating buckets, scopes, and collections refer to xref:manage:manage-buckets/create-bucket.adoc[Create a Bucket].
 
-| Metadata Bucket
-| The name of a bucket currently defined on the cluster.
-This bucket stores artifacts and checkpoint information.
+| Eventing Storage (the Eventing metadata)
+| The name of a keyspace currently defined on the cluster.
+This collection stores artifacts and checkpoint information.
 
 | Function Name
 | A name, for the Function you are creating.
 
 | Deployment Feed Boundary
 | Using the Feed Boundary option, you can either invoke a handler on all data mutations available in the cluster (Everything) or 
-choose to invoke a handler to process only future data mutations. Starting with version 6.6.2, the Feed Boundary is a persistent setting in the 
-Function’s definition and can only be set or altered when a Function is created, undeployed or paused. Thus there is no longer a choice of a feed boundary when a function is deployed as the value is taken from this setting. [.status]#Couchbase Server 6.6.2#
+choose to invoke a handler to process only future data mutations. The Feed Boundary is a persistent setting in the 
+Function’s definition and can only be set or altered when a Function is created, undeployed or paused. 
 
 | Description
 | A description of the Function you are creating.
@@ -62,7 +63,7 @@ This is optional.
 a|
 The available settings are:
 
-* *Log Level:* The granularity at which messages are logged.
+* *System Log Level:* The granularity at which messages are logged.
 The options (available from the arrows control at the right of the field) are Info, Error, Warning, Debug, (the default), and Trace.
 This logging attribute is function-specific and is not applicable for the Eventing Service in general.
 * *N1QL Consistency:* The default consistency level of N1QL statements in the handler either None (the Default) or Request.
@@ -120,22 +121,22 @@ The *From now* option invokes a Function during future instances of data mutatio
 Starting with version 6.6.2, selecting a Feed Boundary has been deprecated and the Feed Boundary is read from the Function's settings. [.status]#Couchbase Server 6.6.2#
 ** Click *Deploy Function*.
 
-. The Eventing function is deployed and starts running within a few seconds (about 15). From this point, the defined Function is executed on all existing documents and on subsequent mutations.
+. The Eventing function is deployed and starts running within a few seconds. From this point, the defined Function is executed on all existing documents and on subsequent mutations.
 +
 image::input-output-overview-6.5.png[,%100]
 +
-Once the Function completes deployment it will quickly process 7,303 items because the *Feed boundary* was set to  *Everything* and then await any new mutations. 
+Once the Function completes deployment (about 15 seconds) it will quickly process all of the 7,303 items in the collection because the *Feed boundary* was set to  *Everything* and then await any new mutations. You should see the success count at 7,303 in the Function's basic statistics.
 +
-image::addfunc_04_newundeployed.png[,100%]
+image::addfunc_05_deployed_done.png[,100%]
 +
-This simple example only has a log(....) statement in the *OnUpdate* handler that will merely list items in the bucket 'beer-sample', i.e. 7,303 documents. Basically the only thing the function does is print the key or ID of each document.
+Since the example only has a log(....) statement in the *OnUpdate* handler it will merely list items in the collection 'beer-sample', i.e. 7,303 documents. Basically the only thing the function does is print the key or ID of each document.
 
 . Once the Eventing Function is fully deployed its status will change from *deploying...* to a status of *deployed*. 
 
 . Verify that the deployment actually worked by clicking the *Log* link that appeared after you deployed the Eventing Function in the right hand side of the screen.
 ** A dialog showing the *Function Log - my_evt_function* will appear with the most recent logging information (in reverse order with the most recent lines first).
 +
-image::addfunc_06_logs_emitted.png[,700]
+image::addfunc_06_logs_emitted.png[,100%]
 ** Click *Close*.
 
 . To pause and resume a function (you can then edit and update the function without missing a mutation)  
