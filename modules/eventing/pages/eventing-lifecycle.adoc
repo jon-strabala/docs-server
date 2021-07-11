@@ -120,9 +120,13 @@ The *From now* option invokes a Function during future instances of data mutatio
 Starting with version 6.6.2, selecting a Feed Boundary has been deprecated and the Feed Boundary is read from the Function's settings. [.status]#Couchbase Server 6.6.2#
 ** Click *Deploy Function*.
 
-. The Eventing function is deployed and starts running within a few seconds. From this point, the defined Function is executed on all existing documents and on subsequent mutations.
+. The Eventing function is deployed and starts running within a few seconds (about 15). From this point, the defined Function is executed on all existing documents and on subsequent mutations.
 +
 image::input-output-overview-6.5.png[,%100]
++
+Once the Function completes deployment it will quickly process 7,303 items because the *Feed boundary* was set to  *Everything* and then await any new mutations. 
++
+image::addfunc_04_newundeployed.png[,100%]
 +
 This simple example only has a log(....) statement in the *OnUpdate* handler that will merely list items in the bucket 'beer-sample', i.e. 7,303 documents. Basically the only thing the function does is print the key or ID of each document.
 
@@ -131,7 +135,7 @@ This simple example only has a log(....) statement in the *OnUpdate* handler tha
 . Verify that the deployment actually worked by clicking the *Log* link that appeared after you deployed the Eventing Function in the right hand side of the screen.
 ** A dialog showing the *Function Log - my_evt_function* will appear with the most recent logging information (in reverse order with the most recent lines first).
 +
-image::addfunc_05_logs_emitted.png[,700]
+image::addfunc_06_logs_emitted.png[,700]
 ** Click *Close*.
 
 . To pause and resume a function (you can then edit and update the function without missing a mutation)  
