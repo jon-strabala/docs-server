@@ -11,15 +11,34 @@ image::lifecycle_overview_notitle.png[,%100]
 This is a quick introduction to Eventing via creating a simple Eventing Handler and subsequently exercising the Eventing 
 Handler's functionality and operations across its typical lifecycle. For a deeper insight refer to the more detailed xref:eventing-examples.adoc[Eventing Examples].
 
-*Prerequisites*: In order to show the basic life cycle of an Eventing Function, we need a Listen To Location (a source keyspace) and an Eventing storage keyspace.
-You must have an Eventing storage keyspace, typically called *metadata*, to be used solely by Eventing -- if it is missing, create it with a minimum size of 100MB.
-For the source keyspace we will use the *beer-sample._default._default* sample document set. 
+*Prerequisites*: In order to show the basic life cycle of an Eventing Function, we need a Listen To Location (a source keyspace) and a seperate Eventing Storage keyspace.
+You must have an Eventing storage keyspace, which shold be typically 100% resident, and the collection is to be used solely by the Eventing Service.
 
-If you don’t already have the sample bucket *beer-sample* (it shuld have a scope of _default and a collection of _default) listed in the *Couchbase Web Console* > *Buckets* page you can load this document set as follows:
+For the Listen To Location or source keyspace we will use the *beer-sample._default._default* sample document set. 
+
+If you don’t already have the sample document set *beer-sample* (it should have a scope of _default and a collection of _default) listed in the *Couchbase Web Console* > *Buckets* page you can load this sample data set as follows:
+
 ** Access the *Couchbase Web Console* > *Settings* page
 ** Select the *Sample Buckets* in the upper right banner. 
 ** Check *beer-sample* checkbox.
 ** Click *Load Sample Data*.
+
+For the Eventing Storage keyspace we need to create one if missing as follows:
+
+** Access the *Couchbase Web Console* > *Buckets* page
+** Select the *Add Bucket* in the upper right banner. 
+** In the dialog set the "Name" of the bucket to *RR100* and set "Memory Quota" to *100* MiB.
+** Click *Add Bucket*.
+
+At this point we could use the Eventing Storage keyspace of _RR100._default._default_, for all eventing function but we might want to split this up by tenants as follows:
+
+** Select *Scopes & Collections* at the right of the new bucket information line.
+** Select the *Add Scope* in the upper right banner. 
+** In the dialog set the "Name" of the Scope to *tenant01*.
+** Click *Save*.
+** Select *Add Collection* at the right of the new scope information line.
+** In the dialog set the "Name" of the Collection to *metadata*.
+** Click *Save*.
 
 [#eventing_examples_preparations]
 To add a new Eventing Function:
@@ -87,19 +106,25 @@ The entry points into the handler, e.g. OnUpdate and OnDelete, processing for ea
 * *Timer Context Max Size*: Timer Context Max Size limits the size of the context for any Timer created by the Function. 
 Eventing Timers can store and access a context which can be any JSON document, the context is used to store state when the timer is created and retrieve state when the timer fires.  By default the size is 1024 bytes, but this can be adjusted on a per Function basis.
 
-
 | Bindings
-| A binding is a construct that allows separating environment specific variables (example: bucket names, external endpoint URLs, credentials) from the handler source code.  Currently Eventing Functions support either *Bucket Bindings* (to access KV data) or *URL Bindings* to communicate externally via cURL. An Eventing Function can have no binding, one binding, or several bindings.
+a|
+A binding is a construct that allows separating environment specific variables (example: bucket names, external endpoint URLs, constants) from the handler source code.  Currently Eventing Functions support the follwing types bindings:
 
-For more information on Bindings, refer to xref:eventing-Terminologies.adoc#section_mzd_l1p_m2b[Bindings].
+* *Bucket Bindings*: to access the Data Service or KV.
+
+* *URL Bindings*: to communicate externally via cURL.
+
+* *Constant Bindings*: to pass global settings/constants into the function.
+
+An Eventing Function can have no bindings, just one binding, or several bindings. For more information on Bindings, refer to xref:eventing-Terminologies.adoc#section_mzd_l1p_m2b[Terminologies - Bindings].
 |===
 
-. In the *ADD FUNCTION* dialog, enter the following information:
- ** For the *Source Bucket* drop-down, select *beer-sample*.  
- ** For the *Metadata Bucket* drop-down, select *metadata*.
+. In the *ADD FUNCTION* dialog, configure the following information:
+ ** For the *Listen To Location* drop-downs, select *beer-sample* for bucket, *_default* for scope, and *_default* for collection.  
+ ** For the *Eventing Storage* drop-downs, select *RR100* for bucket, *tenant01* for scope, and *metadata* for collection.  
  ** Enter *my_evt_function* as the name of the Function you are creating in the *Function Name* text-box.
  ** [Optional Step] Enter text *A simple Eventing Function only prints IDs*, in the *Description* text-box.
- ** For the *Settings* option, use the default values.
+ ** For the *Settings* option, use the default values, feel free to expand and inspect.
  ** For the *Bindings* option, don't add any bindings (we will merely be logging messages).
 +
 image::addfunc_02_settings.png[,484]
@@ -109,42 +134,42 @@ The *my_evt_function* dialog appears.
 You will accept the default for your *my_evt_function code*.
 +
 image::addfunc_03_editor_with_default.png[,100%]
-** You will need to click *Save* if you modified the JavaScript source.
-** To return to the Eventing screen, click the '*< back to Eventing*' link (below the editor) or click the *Eventing* tab.
+** You will need to click *Save and Return* if you modified the JavaScript source.
+** To return to the Eventing screen, click the '*< back to Eventing*' link (above the editor) or just click the *Eventing* tab.
 
 . Click on the Function name.
 +
 image::addfunc_04_newundeployed.png[,100%]
 Additional controls are now displayed. The controls are:
- ** *Delete*: Deletes the Eventing Function from the system.
+** *Delete*: Deletes the Eventing Function from the system.
 ** *Export*: Exports the Eventing Function as a JSON document.
- ** *Deploy*: Deploys the Eventing Function, making it active across the cluster.
- ** *Pause*: Pauses the Eventing Function, making it active across the cluster (only allowed if Deployed).
- ** *Edit JavaScript*: Allows edits to be made on the Eventing Function, in an edit dialog (only allowed when Paused or Undeployed).
+** *Deploy*: Deploys the Eventing Function, making it active across the cluster.
+** *Pause*: Pauses the Eventing Function, making it paused across the cluster (only allowed if the Function is Deployed).  If a Function is paused this button will be renamed *Resume*.
+** *Edit JavaScript*: Allows edits to be made on the Eventing Function, in an edit dialog (only allowed when Paused or Undeployed).  When deployed this button is renamed *View JavaScript*.
 
 . From the *Eventing* screen, click *Deploy*.
-** In the *Confirm Deploy Function* dialog, select *Everything* from the *Feed boundary* option.
+** In the *Confirm Deploy Function* dialog, note that *Everything* is the preferred *Feed boundary*.
 +
 The Feed Boundary determines whether documents previously in existence need to be included in the Function's activities: the options are *Everything* and *From now*.
-The *Everything* option invokes a Function on all mutations available in the cluster.
-The *From now* option invokes a Function during future instances of data mutation, post Function deployment.
+The *Everything* option invokes a Function on all mutations available in the cluster from the *Listen To Location* keyspace.
+The *From now* option invokes a Function during future instances of data mutation, post Function deployment or new changes to the *Listen To Location* keyspace.
+The preferred Deployment Feed Boundary for the function can be changed under the function level settings when the Function is undeployed or paused.
 +
-Starting with version 6.6.2, selecting a Feed Boundary has been deprecated and the Feed Boundary is read from the Function's settings. 
 ** Click *Deploy Function*.
 
-. The Eventing function is deployed and starts running within a few seconds. From this point, the defined Function is executed on all existing documents and on subsequent mutations.
+. While the Eventing function is bootstrapping it will display a status of "deploying..." in the UI. Once the botstrapping is complete the defined Function's JavaScript code is executed on all existing documents and then on subsequent mutations.  This function will only perform logging operations.
 +
 image::input-output-overview-6.5.png[,%100]
 +
-Once the Function completes deployment (about 15 seconds) it will quickly process all of the 7,303 items in the collection because the *Feed boundary* was set to  *Everything* and then await any new mutations. You should see the success count at 7,303 in the Function's basic statistics.
+The deployment process typically takes about 15 seconds. Once the Eventing Function is fully deployed its status will change from *deploying...* to a status of *deployed*. At this point the Eventing service will quickly process all of the 7,303 items in the collection because the *Feed boundary* was set to *Everything* in the Function's settings.  Finially the Function will await any new mutations and immediately proccess them in real-time as they occur.
 +
 image::addfunc_05_deployed_done.png[,100%]
 +
-Since the example only has a log(....) statement in the *OnUpdate* handler it will merely list items in the collection 'beer-sample', i.e. 7,303 documents. Basically the only thing the function does is print the key or ID of each document.
+Since the example only has a single log(....) statement in the *OnUpdate* handler it will merely list items in the collection 'beer-sample', i.e. 7,303 documents.
++
+You should see the success count at 7,303 in the Function's basic statistics.
 
-. Once the Eventing Function is fully deployed its status will change from *deploying...* to a status of *deployed*. 
-
-. Verify that the deployment actually worked by clicking the *Log* link that appeared after you deployed the Eventing Function in the right hand side of the screen.
+. Verify that the deployment and processing actually worked by clicking the *Log* link that appeared after you the Eventing Function eached a status of deployed. The *Log* link appears in the right hand side of the Function's controls.
 ** A dialog showing the *Function Log - my_evt_function* will appear with the most recent logging information (in reverse order with the most recent lines first).
 +
 image::addfunc_06_logs_emitted.png[,100%]
@@ -154,12 +179,12 @@ image::addfunc_06_logs_emitted.png[,100%]
 ** Click *Pause*.
 ** In the *Confirm Pause Function* dialog
 *** Click *Pause Function*.
-** The Eventing function will now pause.
+** The Eventing function will now creak a checkpoint of its progress and pause.
 ** Wait for the "paused" state.
 ** Click *Resume*.
 ** In the *Confirm Resume Function* dialog
 *** Click *Resume Function*.
-** The Eventing function will now resume.
+** The Eventing function will now resume from the previously created checkpoint (no mutations will be missed).
 
 . To remove the Eventing Function *my_evt_function*  
 ** Click *Undeploy*.
