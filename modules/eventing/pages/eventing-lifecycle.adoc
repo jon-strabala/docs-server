@@ -124,10 +124,15 @@ An Eventing Function can have no bindings, just one binding, or several bindings
  ** For the *Eventing Storage* drop-downs, select *RR100* for bucket, *tenant01* for scope, and *metadata* for collection.  
  ** Enter *my_evt_function* as the name of the Function you are creating in the *Function Name* text-box.
  ** [Optional Step] Enter text *A simple Eventing Function only prints IDs*, in the *Description* text-box.
- ** For the *Settings* option, use the default values, feel free to expand and inspect.
+ ** For the *Settings* option, use the default values, feel free to expand this section and inspect.
  ** For the *Bindings* option, don't add any bindings (we will merely be logging messages).
 +
 image::addfunc_02_settings.png[,484]
++
+Note we left the Settings alone, if you expanded the collapsable Settings control the following defaults were used:
++
+image::addfunc_02_adv_settings.png[,484]
++
 . After providing all the required information in the *ADD FUNCTION* dialog, click *Next: Add Code*.
 The *my_evt_function* dialog appears.
 ** The *my_evt_function* dialog initially contains a placeholder code block.
