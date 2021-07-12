@@ -165,6 +165,9 @@ Additional controls are now displayed. The controls are:
 ** *Edit JavaScript*: Allows edits to be made on the Eventing Function, in an edit dialog (only allowed when Paused or Undeployed).  When deployed this button is renamed *View JavaScript*.
 
 . From the *Eventing* screen, click *Deploy*.
++
+image::addfunc_04a_deploy.png[,%100]
++
 ** In the *Confirm Deploy Function* dialog, note that *Everything* is the preferred *Feed boundary*.
 +
 The Feed Boundary determines whether documents previously in existence need to be included in the Function's activities: the options are *Everything* and *From now*.
@@ -192,23 +195,39 @@ You should see the success count at 7,303 in the Function's basic statistics.
 image::addfunc_06_logs_emitted.png[,100%]
 ** Click *Close*.
 
-. To pause and resume a function (you can then edit and update the function without missing a mutation)  
+. To pause a Function (you can then edit and update the function without missing a mutation)  
++
+image::addfunc_07_pause.png[,%100]
++
 ** Click *Pause*.
 ** In the *Confirm Pause Function* dialog
 *** Click *Pause Function*.
 ** The Eventing function will now create a checkpoint of its progress and pause.
 ** Wait for the "paused" state.
+
+. To resume a function that has been paused
++
+image::addfunc_07_resume.png[,%100]
++
 ** Click *Resume*.
 ** In the *Confirm Resume Function* dialog
 *** Click *Resume Function*.
 ** The Eventing function will now resume from the previously created checkpoint (no mutations will be missed).
 
-. To remove the Eventing Function *my_evt_function*  
+. To undeploy the Eventing Function *my_evt_function*
++
+image::addfunc_07_undeploy.png[,%100]
++
 ** Click *Undeploy*.
 ** In the *Confirm Undeploy Function* dialog
 *** Click *Undeploy Function*.
 ** The Eventing function will now undeploy.
 ** Wait for the "undeployed" state.
+
+. To delete the Eventing Function *my_evt_function*
++
+image::addfunc_08_delete.png[,%100]
++
 ** Click *Delete*.
 ** In the *Confirm Delete Function* dialog
 *** Click *Delete Function*.
