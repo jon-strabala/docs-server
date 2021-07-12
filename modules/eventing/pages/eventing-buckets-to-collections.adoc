@@ -1,7 +1,8 @@
 = Buckets vs Collections
 :page-edition: Enterprise Edition
 
-Now in Couchbase version 7.0 the concept of scopes and collections have been introduced allowing greator flexibility in grouping data and also the ability to support multitenanacy. 
+Now in Couchbase version 7.0 the concept of scopes and collections have been introduced allowing greater 
+flexibility in grouping data and also the ability to support multitenancy. 
 
 In older versions of Couchbase, data was organized like this:
 
@@ -9,7 +10,7 @@ In older versions of Couchbase, data was organized like this:
 * Bucket
 * Document
 
-In Couchbase 7.0, there are two new organizatinal layers, Scope and Collection, thus the hirarchy now looks like the follwoing:
+In Couchbase 7.0, there are two new organizational layers, Scope and Collection, thus the hierarchy now looks like the following:
 
 * Cluster
 * Bucket
@@ -30,8 +31,8 @@ into a single bucket and distinguishing them by a type field, you can instead cr
 you can query against the collection, not just the whole bucket. You will also eventually be able to control access at the collection level.
 
 Prior to Couchbase version 7.0 all services, including Eventing, were Bucket oriented where multiple sets of documents were 
-written to a limited set of buckets (typically no more than 30 buckets).  Non homogeneious documents within the same bucket 
-were typically differtiated by an addtional type property.
+written to a limited set of buckets (typically no more than 30 buckets).  Non-homogeneous documents within the same bucket 
+were typically differentiated by an additional type property.
 
 [source,javascript]
 ----
@@ -55,10 +56,10 @@ were typically differtiated by an addtional type property.
 }
 ----
 
-Every created bucket is automatically given a default scope, and within it, a default collection. Each is named _default.  
+Every created bucket is automatically given a default scope, and within it, a default collection. Each is named *_default*.  
 This allows a simple seamless migration from a Cluster/Bucket/Document model to a Cluster/Bucket/Scope/Collection/Document model without concern to any reorganization.
 
-Thus a bucket called travelinfo prior to 7.0 essentailly becomes a single collection travelinfo._default._defalt and the data set can remain unchanged after upgrading your cluster to 7.0.  
+Thus a bucket called `travelinfo` prior to 7.0 essentially becomes a single collection `travelinfo._default._default` and the data set can remain unchanged after upgrading your cluster to 7.0.  
 
 However all types could be split up and moved into individual collections perhaps all airline documents to a keyspace of `travelinfo.data.airline` and all hotel documents to a keyspace of `travelinfo.data.hotel`.  
 
@@ -71,17 +72,20 @@ The benefits of reorganizing to collections are numerous:
 * Easier migration from relational databases to Couchbase Server, since collections can be designed to correspond to pre-existing relational tables.
 * Secure isolation of different document-types, within a bucket; allowing applications to be specifically authorized to use only their appropriate subsets of data.
 
-Eventing in the collections world can just use the _default scope and the _default collection and essentially run without and cahanges.  However there are oppertunities for reorganizing the groupings of your data.
+Eventing in the collections world can just use the _default scope and the _default collection and essentially run without and changes.  However there are opportunities for reorganizing the groupings of your data to lower the needed resources or increase througput.
 
-Eventing with Full Collections Support: Single Tenancy
+*Eventing with Full Collections Support: Single Tenancy*
 
 image::eventing-collections-single-tenant.jpg[,%100]
 
-Eventing with Full Collections Support: Multi Tenancy
+*Eventing with Full Collections Support: Multi Tenancy*
 
 image::eventing-collections-multi-tenant.jpg[,%100]
 
+To ensure the highest performance the Eventing "metadata" (now called ‘Eventing Storage’ in collections) which is for internal housekeeping should be 100% resident.  The other non-metadata bucket can have much lower residency. 
 
+For Single Tenancy we only need a one shared  ‘Eventing Storage’ collection, but for Multi Tenancy we design two "parallel" buckets as shown in the second diagram.  
 
+If we put the put ‘Eventing Storage’ (in collections) in the same bucket as with data with non 100% residency the Evening performance can easily drop by a factor of five (5) or more.
 
-
+Typically the overhead of the Eventing housekeeping area "Eventing Storage" is typically quite small, just 1024 documents per Function.   However if Timers are used the size of this collection can grow to about 800 bytes x # of active timers.  As such the enclosing bucket needs to be sized appropriately.
