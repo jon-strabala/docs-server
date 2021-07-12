@@ -118,7 +118,7 @@ Eventing Timers can store and access a context which can be any JSON document, t
 
 | Bindings
 a|
-A binding is a construct that allows separating environment specific variables (example: bucket names, external endpoint URLs, constants) from the handler source code.  Currently Eventing Functions support the following types bindings:
+A binding is a construct that allows separating environment specific variables (example: bucket names, external endpoint URLs, constants) from the handler source code.  Currently Eventing Functions support the following binding types:
 
 * *Bucket Bindings*: to access the Data Service or KV.
 
@@ -196,7 +196,7 @@ image::addfunc_06_logs_emitted.png[,100%]
 ** Click *Pause*.
 ** In the *Confirm Pause Function* dialog
 *** Click *Pause Function*.
-** The Eventing function will now creak a checkpoint of its progress and pause.
+** The Eventing function will now create a checkpoint of its progress and pause.
 ** Wait for the "paused" state.
 ** Click *Resume*.
 ** In the *Confirm Resume Function* dialog
