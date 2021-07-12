@@ -72,7 +72,7 @@ The benefits of reorganizing to collections are numerous:
 * Easier migration from relational databases to Couchbase Server, since collections can be designed to correspond to pre-existing relational tables.
 * Secure isolation of different document-types, within a bucket; allowing applications to be specifically authorized to use only their appropriate subsets of data.
 
-Eventing in the collections world can just use the _default scope and the _default collection and essentially run without and changes.  However there are opportunities for reorganizing the groupings of your data to lower the needed resources or increase througput.
+Eventing in the collections world can just use the _default scope and the _default collection and essentially run without and changes.  However there are opportunities for reorganizing the groupings of your data to lower the needed resources or increase throughput.
 
 *Eventing with Full Collections Support: Single Tenancy*
 
