@@ -1,0 +1,60 @@
+= Buckets vs Collections
+:page-edition: Enterprise Edition
+
+Now in Couchbase version 7.0 the concept of scopes and collections have been introduced allowing greator flexibility in grouping data and also the ability to support multitenanacy. 
+
+In older versions of Couchbase, data was organized like this:
+
+* Cluster
+* Bucket
+* Document
+
+In Couchbase 7.0, there are two new organizatinal layers, Scope and Collection, thus the hirarchy now looks like the follwoing:
+
+* Cluster
+* Bucket
+* Scope
+* Collection
+* Document
+
+Scopes are the level of organization below a buckets. Scopes contain collections and collections contain documents. There are 
+different ways to use scopes, depending on what the Couchbase cluster is being used for. If it is supporting many different internal 
+applications for a company, each application should have a scope of its own. If the cluster is being used to serve many client 
+organizations, each running its own copy of an application, each copy should have a scope of its own. Similarly, if a cluster is 
+being used by dev groups, perhaps for testing, the unit of allocation should be a scope. In each case, the owner can then create 
+whatever collections they want under the scope they are assigned.
+
+Collections are the lowest level of document organization, and directly contain documents. They are useful because they let you group 
+documents more precisely than was possible before. Rather than dumping all different types of documents (products, orders, customers) 
+into a single bucket and distinguishing them by a type field, you can instead create a collection for each type. And when you query, 
+you can query against the collection, not just the whole bucket. You will also eventually be able to control access at the collection level.
+
+Prior to Couchbase version 7.0 all services, including Eventing, were Bucket oriented where multiple sets of documents were 
+written to a limited set of buckets (typically no more than 30 buckets).  Non homogeneious documents within the same bucket 
+were typically differtiated by an addtional type property.
+
+[source,javascript]
+----
+{
+  "id": 10025,
+  "type": "hotel",
+  "brand": "Hilton",
+      *
+      *
+}
+----
+
+[source,javascript]
+----
+{
+  "id": 10,
+  "type": "airline",
+  "iata": "Q5",
+    *
+    *
+}
+----
+
+Every created bucket is automatically given a default scope, and within it, a default collection. Each is named _default.  
+This allows a simple seamless migration from a Cluster/Bucket/Document model to a Cluster/Bucket/Scope/Collection/Document model without concern to any reorganization.
+
