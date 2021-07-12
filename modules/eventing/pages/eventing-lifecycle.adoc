@@ -13,8 +13,8 @@ Handler's functionality and operations across its typical lifecycle. For a deepe
 
 == *Prerequisites*: 
 
-In order to show the basic life cycle of an Eventing Function, we need a Listen To Location (a source keyspace) and a seperate Eventing Storage keyspace.
-You must have an Eventing storage keyspace, which shold be typically 100% resident, and the collection is to be used solely by the Eventing Service.
+In order to show the basic life cycle of an Eventing Function, we need a Listen To Location (a source keyspace) and a separate Eventing Storage keyspace.
+You must have an Eventing storage keyspace, which should be typically 100% resident, and the collection is to be used solely by the Eventing Service.
 
 For the Listen To Location or source keyspace we will use the *beer-sample._default._default* sample document set. 
 
@@ -32,7 +32,7 @@ For the Eventing Storage keyspace we need to create one if missing as follows:
 ** In the dialog set the "Name" of the bucket to *RR100* and set "Memory Quota" to *100* MiB.
 ** Click *Add Bucket*.
 
-At this point we could use the Eventing Storage keyspace of _RR100._default._default_, for all eventing function but we might want to split this up by tenants as follows:
+At this point we could use the Eventing Storage keyspace of _RR100._default._default_, for all Eventing Functions but we might want to split this up by tenants as follows:
 
 ** Select *Scopes & Collections* at the right of the new bucket information line.
 ** Select the *Add Scope* in the upper right banner. 
@@ -74,7 +74,7 @@ For more information on creating buckets, scopes, and collections refer to xref:
 
 | Eventing Storage (the Eventing metadata keyspace)
 | The name of a collection currently defined on the cluster.
-The Eventing Storage (or Metadata) collection, stores artifacts (or configuration documents) for your Function. Acommon Eventing Storage collection can be shared across all Eventing Functions for the same tenant.
+The Eventing Storage (or Metadata) collection, stores artifacts (or configuration documents) for your Function. A common Eventing Storage collection can be shared across all Eventing Functions for the same tenant.
 
 // TODO7X - need to check/fix this (buckets, scopes, collections)
 For more information on creating buckets, scopes, and collections refer to xref:manage:manage-buckets/create-bucket.adoc[Create a Bucket].
@@ -98,14 +98,14 @@ The available settings (by default hidden within a collapsible panel) for comple
 * *System Log Level*: Determines the granularity at which messages are logged to the common system log messages across all Eventing Functions. The available choices are: `Info` (the default), `Error`, `Debug`, `Warning`, and `Trace`. Leave this alone unless asked by support to change it.
 
 * *Application log location* The directory path to the log file for the application or the Function specific log messages named <<function_name>>.log. 
-The Function designer uses log() statments to write to this file in addition it will also record some Function specific system level errors.  
+The Function designer uses log() statements to write to this file in addition it will also record some Function specific system level errors.  
 In the UI when "Log" is selected these files are combined across all Eventing nodes and displayed. This path is set at node initialization.
 
 * *N1QL Consistency*: The default consistency level of N1QL statements in the handler.
 This controls the consistency level for N1QL statements, but can be set on a per statement basis. The valid values are `None` (the default) and `Request`.
 
 * *Workers*: Workers the number of worker processes to be started for the handler.
-The minimum value is 1 (the default) and the recomended maximum is 64.
+The minimum value is 1 (the default) and the recommended maximum is 64.
 
 * *Language compatibility*: The language version of the handler for backward compatibility.
 If the semantics of a language construct change in any given release the “Language compatibility” setting will ensure an older handler will continue to see the runtime behavior that existed at the time it was authored, until such behavior is deprecated and removed. Note 6.0.0, 6.5.0, and 6.6.2 (the default) are the only currently defined versions.
@@ -118,7 +118,7 @@ Eventing Timers can store and access a context which can be any JSON document, t
 
 | Bindings
 a|
-A binding is a construct that allows separating environment specific variables (example: bucket names, external endpoint URLs, constants) from the handler source code.  Currently Eventing Functions support the follwing types bindings:
+A binding is a construct that allows separating environment specific variables (example: bucket names, external endpoint URLs, constants) from the handler source code.  Currently Eventing Functions support the following types bindings:
 
 * *Bucket Bindings*: to access the Data Service or KV.
 
@@ -139,7 +139,7 @@ An Eventing Function can have no bindings, just one binding, or several bindings
 +
 image::addfunc_02_settings.png[,484]
 +
-Note, we left the Settings alone, however if you expanded the collapsable Settings control you can see the defaults that the Function will use:
+Note, we left the Settings alone, however if you expanded the collapsible Settings control you can see the defaults that the Function will use:
 +
 image::addfunc_02_adv_settings.png[,484]
 +
@@ -152,7 +152,7 @@ image::addfunc_03_editor_with_default.png[,100%]
 ** You will need to click *Save and Return* if you modified the JavaScript source.
 ** To return to the Eventing screen, click the '*< back to Eventing*' link (above the editor) or just click the *Eventing* tab.
 
-== Excercise the Eventing Lifecycle:
+== Exercise the Eventing Lifecycle:
 
 . Click on the Function name.
 +
@@ -174,11 +174,11 @@ The preferred Deployment Feed Boundary for the function can be changed under the
 +
 ** Click *Deploy Function*.
 
-. While the Eventing function is bootstrapping it will display a status of "deploying..." in the UI. Once the botstrapping is complete the defined Function's JavaScript code is executed on all existing documents and then on subsequent mutations.  This function will only perform logging operations.
+. While the Eventing function is bootstrapping it will display a status of "deploying..." in the UI. Once the bootstrapping is complete the defined Function's JavaScript code is executed on all existing documents and then on subsequent mutations.  This function will only perform logging operations.
 +
 image::input-output-overview-6.5.png[,%100]
 +
-The deployment process typically takes about 15 seconds. Once the Eventing Function is fully deployed its status will change from *deploying...* to a status of *deployed*. At this point the Eventing service will quickly process all of the 7,303 items in the collection because the *Feed boundary* was set to *Everything* in the Function's settings.  Finially the Function will await any new mutations and immediately proccess them in real-time as they occur.
+The deployment process typically takes about 15 seconds. Once the Eventing Function is fully deployed its status will change from *deploying...* to a status of *deployed*. At this point the Eventing service will quickly process all of the 7,303 items in the collection because the *Feed boundary* was set to *Everything* in the Function's settings.  Finally the Function will await any new mutations and immediately process them in real-time as they occur.
 +
 image::addfunc_05_deployed_done.png[,100%]
 +
@@ -186,7 +186,7 @@ Since the example only has a single log(....) statement in the *OnUpdate* handle
 +
 You should see the success count at 7,303 in the Function's basic statistics.
 
-. Verify that the deployment and processing actually worked by clicking the *Log* link that appeared after you the Eventing Function eached a status of deployed. The *Log* link appears in the right hand side of the Function's controls.
+. Verify that the deployment and processing actually worked by clicking the *Log* link that appeared after you the Eventing Function reached a status of deployed. The *Log* link appears in the right hand side of the Function's controls.
 ** A dialog showing the *Function Log - my_evt_function* will appear with the most recent logging information (in reverse order with the most recent lines first).
 +
 image::addfunc_06_logs_emitted.png[,100%]
