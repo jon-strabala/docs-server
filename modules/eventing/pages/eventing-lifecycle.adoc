@@ -64,31 +64,29 @@ This is optional.
 
 | Settings
 a|
-The available settings (by default hidden within a collapsible panel) are:
+The available settings (by default hidden within a collapsible panel) for complete details refer to xref:eventing-Terminologies.adoc#function-settings[Terminologies - Function Settings]:
 
-* *System Log Level:* The granularity at which messages are logged.
-The options (available from the arrows control at the right of the field) are Info, Error, Warning, Debug, (the default), and Trace.
-This logging attribute is function-specific and is not applicable for the Eventing Service in general.
+* *System Log Level*: Determines the granularity at which messages are logged to the common system log messages across all Eventing Functions. The available choices are: `Info` (the default), `Error`, `Debug`, `Warning`, and `Trace`. Leave this alone unless asked by support to change it.
 
-* *System Log Level*: Determines the granularity at which messages are logged to the common system log messages across all Eventing Functions. 
-The available choices are: `Info`, `Error`, `Debug`, `Warning`, and `Trace`.  
-Typically you will never need to adjust this from the default setting of `Info`, the data in this file is generally only used by support.
-
-* *Application log location* The directory of the log file for the application or the Function specific log messages named <<function_name>>.log. 
+* *Application log location* The directory path to the log file for the application or the Function specific log messages named <<function_name>>.log. 
 The Function designer uses log() statments to write to this file in addition it will also record some Function specific system level errors.  
-In the UI when "Log" is selected these files are combined across all Eventing nodes and displayed.
+In the UI when "Log" is selected these files are combined across all Eventing nodes and displayed. This path is set at node initialization.
 
-* *N1QL Consistency:* The default consistency level of N1QL statements in the handler either None (the Default) or Request.
+* *N1QL Consistency*: The default consistency level of N1QL statements in the handler.
+This controls the consistency level for N1QL statements, but can be set on a per statement basis. The valid values are `None` (the default) and `Request`.
 
 * *Workers*: Workers the number of worker processes to be started for the handler.
-The default value is 1 (the minimum is 1 and the recomended maximum is 64).
+The minimum value is 1 (the default) and the recomended maximum is 64.
 
-* *Language compatibility:* The language version of the handler for backward compatibility either 6.0.0 or 6.5.0. Primarily to allow older handlers to continue to see the runtime behavior that existed at the time they were authored
-+
-Only a Function with “language compatibility” of 6.6.2 in its settings will pass binary documents to the OnUpdate(doc,meta) handler. Earlier “language compatibility” values of 6.0.0 and 6.5.0 will filter all binary documents out of the DCP mutation stream. [.status]#Couchbase Server 6.6.2#
-* *Script Timeout:* The number of seconds that should elapse before the script times out and is terminated.
-The default is 60.
-* *Timer Context Max Size*: Timer Context Max Size limits the size of the context for any Timer created by the Function. By default the size is 1024 bytes, but this can be adjusted on a per Function basis. [.status]#Couchbase Server 6.6.2#
+* *Language compatibility*: The language version of the handler for backward compatibility.
+If the semantics of a language construct change in any given release the “Language compatibility” setting will ensure an older handler will continue to see the runtime behavior that existed at the time it was authored, until such behavior is deprecated and removed. Note 6.0.0, 6.5.0, and 6.6.2 (the default) are the only currently defined versions.
+
+* *Script Timeout*: Script Timeout provides a timeout option to terminate a non-responsive Function.
+The entry points into the handler, e.g. OnUpdate and OnDelete, processing for each mutation must complete from start to finish prior to this specified timeout duration. The default is 60 seconds.
+
+* *Timer Context Max Size*: Timer Context Max Size limits the size of the context for any Timer created by the Function. 
+Eventing Timers can store and access a context which can be any JSON document, the context is used to store state when the timer is created and retrieve state when the timer fires.  By default the size is 1024 bytes, but this can be adjusted on a per Function basis.
+
 
 | Bindings
 | A binding is a construct that allows separating environment specific variables (example: bucket names, external endpoint URLs, credentials) from the handler source code.  Currently Eventing Functions support either *Bucket Bindings* (to access KV data) or *URL Bindings* to communicate externally via cURL. An Eventing Function can have no binding, one binding, or several bindings.
@@ -131,7 +129,7 @@ The Feed Boundary determines whether documents previously in existence need to b
 The *Everything* option invokes a Function on all mutations available in the cluster.
 The *From now* option invokes a Function during future instances of data mutation, post Function deployment.
 +
-Starting with version 6.6.2, selecting a Feed Boundary has been deprecated and the Feed Boundary is read from the Function's settings. [.status]#Couchbase Server 6.6.2#
+Starting with version 6.6.2, selecting a Feed Boundary has been deprecated and the Feed Boundary is read from the Function's settings. 
 ** Click *Deploy Function*.
 
 . The Eventing function is deployed and starts running within a few seconds. From this point, the defined Function is executed on all existing documents and on subsequent mutations.
