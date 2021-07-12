@@ -41,11 +41,9 @@ At this point we could use the Eventing Storage keyspace of _RR100._default._def
 ** Click *Save*.
 
 If we return to the *Couchbase Web Console* > *Buckets* page you should see two (2) buckets.
-+
 image::addfunc_00_prereq_bkts.png[,100%]
-+
+
 If we now select *Scopes & Collections* at the right of the RR100 bucket information line, then expand tenant01 you should see the metadata collection.
-+
 image::addfunc_00_prereq_bkts_s_c.png[,100%]
 
 [#eventing_examples_preparations]
