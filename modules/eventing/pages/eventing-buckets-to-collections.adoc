@@ -73,6 +73,13 @@ The benefits of reorganizing to collections are numerous:
 
 Eventing in the collections world can just use the _default scope and the _default collection and essentially run without and cahanges.  However there are oppertunities for reorganizing the groupings of your data.
 
+Eventing with Full Collections Support: Single Tenancy
+
+image::eventing-collections-single-tenant.jpg[,%100]
+
+Eventing with Full Collections Support: Multi Tenancy
+
+image::eventing-collections-multi-tenant.jpg[,%100]
 
 
 
