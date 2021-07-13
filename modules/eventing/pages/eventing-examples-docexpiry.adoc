@@ -13,11 +13,17 @@ The original document in the source bucket is not changed (and will be deleted).
 
 *Preparations*:
 
-For this example, three buckets *'source'*, *'target'*, and *'metadata'*, are required (note the metadata bucket for Eventing can be shared with other Eventing functions). Make all three buckets with minimum size of 100MB.
+For this example, two (2) buckets *'bulk'* and *'rr100'* are required where the later is intended to be 100% resident.  
+Create the buckets with a minimum size of 100MB. 
+For information on buckets, see xref:manage:manage-buckets/create-bucket.adoc[Create a Bucket].
+Within the buckets we need three (3) keyspaces *'bulk.data.source'*, *'bulk.data.target'*, and *'rr100.eventing.metadata'*. 
 
-For steps to create buckets, see xref:manage:manage-buckets/create-bucket.adoc[Create a Bucket].
+_If you run a version of Couchbase prior to 7.0 you can just create the buckets *'source'*, *'target'*, and *'metadata'* and run this example._
 
-NOTE: The *'metadata'* bucket is for the sole use of the Eventing system, do not add, modify, or delete documents from this bucket. In addition do not drop or flush or delete the bucket while you have any deployed Eventing functions.
+For complete details on how to set up your keyspaces refer to xref:manage:manage-buckets/create-bucket.adoc[creating buckets] and 
+xref:manage:manage-scopes-and-collections/manage-scopes-and-collections.add[creating scopes and collections].  
+
+NOTE: The Eventing Storage keyspace, in this case *'rr100.eventing.metadata'*, is for the sole use of the Eventing system, do not add, modify, or delete documents from it.  In addition do not drop or flush or delete the bucket while you have any deployed Eventing functions. In a single tenancy deployment this collection can be shared with other Eventing functions.
 
 You will need to run _cbc_ (the command-line KV client) or alternatively an SDK python script or Java program to create or update a document in the 'source' bucket, with an expiration time of 600 seconds.
 
