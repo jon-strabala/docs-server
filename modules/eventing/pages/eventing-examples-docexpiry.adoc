@@ -20,6 +20,7 @@ Within the buckets we need three (3) keyspaces *'bulk.data.source'*, *'bulk.data
 
 _If you run a version of Couchbase prior to 7.0 you can just create the buckets *'source'*, *'target'*, and *'metadata'* and run this example._
 
+// TODO7X - need to check/fix this (buckets, scopes, collections)
 For complete details on how to set up your keyspaces refer to xref:manage:manage-buckets/create-bucket.adoc[creating buckets] and 
 xref:manage:manage-scopes-and-collections/manage-scopes-and-collections.add[creating scopes and collections].  
 
