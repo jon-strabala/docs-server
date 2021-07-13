@@ -31,7 +31,7 @@ _If you run a version of Couchbase prior to 7.0 you can just create the buckets 
 For complete details on how to set up your keyspaces refer to xref:manage:manage-buckets/create-bucket.adoc[creating buckets] and 
 xref:manage:manage-scopes-and-collections/manage-scopes-and-collections.add[creating scopes and collections].  
 
-NOTE: The Eventing Storage keyspace, in this case *'rr100.eventing.metadata'*, is for the sole use of the Eventing system, do not add, modify, or delete documents from it.  In addition do not drop or flush or delete the bucket while you have any deployed Eventing functions. In a single tenancy deployment this collection can be shared with other Eventing functions.
+NOTE: The Eventing Storage keyspace, in this case *'rr100.eventing.metadata'*, is for the sole use of the Eventing system, do not add, modify, or delete documents from it.  In addition do not drop or flush or delete the containing bucket (or delete this collection) while you have any deployed Eventing functions. In a single tenancy deployment this collection can be shared with other Eventing functions.
 
 The 'source' bucket will have a 'Bucket Max Time-To-Live' or TTL of 600 seconds.
 
