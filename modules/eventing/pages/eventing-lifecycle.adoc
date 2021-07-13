@@ -70,14 +70,16 @@ The *ADD FUNCTION* dialog enables the developer to provide the following informa
 | The name of a collection currently defined on the cluster.
 
 // TODO7X - need to check/fix this (buckets, scopes, collections)
-For more information on creating buckets, scopes, and collections refer to xref:manage:manage-buckets/create-bucket.adoc[Create a Bucket].
+For complete details on how to set up your keyspaces refer to xref:manage:manage-buckets/create-bucket.adoc[creating buckets] and 
+xref:manage:manage-scopes-and-collections/manage-scopes-and-collections.add[creating scopes and collections].  
 
 | Eventing Storage (the Eventing metadata keyspace)
 | The name of a collection currently defined on the cluster.
 The Eventing Storage (or Metadata) collection, stores artifacts (or configuration documents) for your Function. A common Eventing Storage collection can be shared across all Eventing Functions for the same tenant.
 
 // TODO7X - need to check/fix this (buckets, scopes, collections)
-For more information on creating buckets, scopes, and collections refer to xref:manage:manage-buckets/create-bucket.adoc[Create a Bucket].
+For complete details on how to set up your keyspaces refer to xref:manage:manage-buckets/create-bucket.adoc[creating buckets] and 
+xref:manage:manage-scopes-and-collections/manage-scopes-and-collections.add[creating scopes and collections].  
 
 | Function Name
 | A name, for the Function you are creating.
