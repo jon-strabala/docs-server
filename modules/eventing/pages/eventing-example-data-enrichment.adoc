@@ -11,13 +11,21 @@
 
 NOTE: As of the 6.5 release, the handler code can directly mutate (or write back) to the source bucket. Case 2 demonstrates this ability.
 
-*Preparations (Common)*
+*Preparations (Common):*
 
-For this example, three buckets 'source', 'target', and 'metadata', are required (note the metadata bucket for Eventing can be shared with other Eventing functions). For *Case 1* we will use both 'source and 'target' buckets.  for *Case 2* we will only use the 'source' bucket. Make all three buckets with minimum size of 100MB.
+For this example, two (2) buckets *'bulk'* and *'rr100'* are required where the later is intended to be 100% resident.  
+Create the buckets with a minimum size of 100MB. 
+For information on buckets, see xref:manage:manage-buckets/create-bucket.adoc[Create a Bucket].
+Within the buckets we need three (3) keyspaces *'bulk.data.source'*, *'bulk.data.target'*, and *'rr100.eventing.metadata'*. 
 
-For steps to create buckets, see xref:manage:manage-buckets/create-bucket.adoc[Create a Bucket].
+_If you run a version of Couchbase prior to 7.0 you can just create the buckets *'source'*, *'target'*, and *'metadata'* and run this example.  Furthermore if your cluster was subsequently upgraded from say 6.6.2 to 7.0 your data would be moved to *'source._default._default'*, *'target._default._default'*, and *'metadata._default._default'* and your Eventing Function would be seamlessly upgraded to use the new keyspaces and continue to run correctly._
 
-NOTE: The 'metadata' bucket is for the sole use of the Eventing system, do not add, modify, or delete documents from this bucket. In addition do not drop or flush or delete the bucket while you have any deployed Eventing functions.
+// TODO7X - need to check/fix this (buckets, scopes, collections)
+For complete details on how to set up your keyspaces refer to xref:manage:manage-buckets/create-bucket.adoc[creating buckets] and 
+xref:manage:manage-scopes-and-collections/manage-scopes-and-collections.add[creating scopes and collections].  
+
+NOTE: The Eventing Storage keyspace, in this case *'rr100.eventing.metadata'*, is for the sole use of the Eventing system, do not add, modify, or delete documents from it.  In addition do not drop or flush or delete the bucket while you have any deployed Eventing functions. In a single tenancy deployment this collection can be shared with other Eventing functions.
+
 
 *Procedure (Case 1)*:
 
