@@ -3,13 +3,11 @@
 
 *Goal*: Given a legacy document set containing attributes whose format makes them difficult to search on. In order to correct this search deficiency new searchable attributes will be added to the document. These new attributes related to and can be calculated from the original attributes. On any mutation (a document creation or modification) the new attributes should also be created (or updated)
 
-*Implementation*: Implementation: Create JavaScript function that contains an *OnUpdate* handler. The handler listens for mutations or data-changes within a specified, source bucket. When any document within the bucket is created or modified, the handler executes a user-defined routine. In this example, if the created or altered document contains two specifically named fields containing IP addresses (these respectively corresponding to the beginning and end of an address-range), the handler-routine converts each of the IP addresses to an integer and upserts them as new fields in the document.
+*Implementation*: Implementation: Create JavaScript function that contains an *OnUpdate* handler. The handler listens for mutations or data-changes within a specified "Listen To Location" (or source collection). When any document within the collection is created or modified, the handler executes a user-defined routine. In this example, if the created or altered document contains two specifically named fields containing IP addresses (these respectively corresponding to the beginning and end of an address-range), the handler-routine converts each of the IP addresses to an integer and upserts them as new fields in the document.
 
-** *Case 1*: A new document is created in a specified, target bucket: this new document is identical to the old, except that it has two new additional fields, which contain integers that correspond to the IP addresses. The original document, in the source bucket, is not changed.
+** *Case 1*: A new document is created in a specified, target collection: this new document is identical to the old, except that it has two new additional fields, which contain integers that correspond to the IP addresses. The original document, in the source collection, is not changed.
 
-** *Case 2*: The original document, in the source bucket, is mutated (or changed) to have two additional fields, which contain integers that correspond to the IP addresses. 
-
-NOTE: As of the 6.5 release, the handler code can directly mutate (or write back) to the source bucket. Case 2 demonstrates this ability.
+** *Case 2*: The original document, in the source collection, is mutated (or changed) to have two additional fields, which contain integers that correspond to the IP addresses. In this case the Eventing Service automatically suppresses the recursive mutation. 
 
 *Preparations (Common):*
 
@@ -24,7 +22,7 @@ _If you run a version of Couchbase prior to 7.0 you can just create the buckets 
 For complete details on how to set up your keyspaces refer to xref:manage:manage-buckets/create-bucket.adoc[creating buckets] and 
 xref:manage:manage-scopes-and-collections/manage-scopes-and-collections.add[creating scopes and collections].  
 
-NOTE: The Eventing Storage keyspace, in this case *'rr100.eventing.metadata'*, is for the sole use of the Eventing system, do not add, modify, or delete documents from it.  In addition do not drop or flush or delete the bucket while you have any deployed Eventing functions. In a single tenancy deployment this collection can be shared with other Eventing functions.
+NOTE: The Eventing Storage keyspace, in this case *'rr100.eventing.metadata'*, is for the sole use of the Eventing system, do not add, modify, or delete documents from it.  In addition do not drop or flush or delete the containing bucket (or delete this collection) while you have any deployed Eventing functions. In a single tenancy deployment this collection can be shared with other Eventing functions.
 
 
 *Procedure (Case 1)*:
