@@ -4,13 +4,13 @@
 Now in Couchbase version 7.0 the concept of scopes and collections have been introduced allowing greater 
 flexibility in grouping data and also the ability to support multitenancy. 
 
-In older versions of Couchbase, data was organized like this:
+In older versions of Couchbase, data was organized like this (documents exist only in Buckets):
 
 * Cluster
 * Bucket
 * Document
 
-In Couchbase 7.0, there are two new organizational layers, Scope and Collection, thus the hierarchy now looks like the following:
+In Couchbase 7.0, there are two new organizational layers, Scope and Collection, thus the hierarchy now looks like the following (documents exist only in Collections):
 
 * Cluster
 * Bucket
