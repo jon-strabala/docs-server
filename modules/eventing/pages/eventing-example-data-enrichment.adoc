@@ -35,6 +35,13 @@ NOTE: The Eventing Storage keyspace, in this case *'rr100.eventing.metadata'*, i
 ** For the *ID* in the *Create New Document* dialog specify *SampleDocument*
 ** For the document body in the *Create New Document* dialog, the following text is displayed:
 +
+++++
+<table border="0">
+<tr>
+<td border="0">ID</td><td width="300px"></td>
+</table>
+++++
++
 ----
 {
 "click": "to edit",
@@ -42,6 +49,13 @@ NOTE: The Eventing Storage keyspace, in this case *'rr100.eventing.metadata'*, i
 }
 ----
 ** replace the above text with the following JSON document via a cut-n-paste
++
+++++
+<table border="0">
+<tr>
+<td border="0">ID</td><td width="300px">SampleDocument</td>
+</table>
+++++
 +
 ----
 {
@@ -137,6 +151,13 @@ image::enrichcase1_03a_deploy.png[,100%]
 ** For the *ID* in the *Create New Document* dialog specify *AnotherSampleDocument*
 ** For the document body in the *Create New Document* dialog, the following text is displayed:
 +
+++++
+<table border="0">
+<tr>
+<td border="0">ID</td><td width="300px"></td>
+</table>
+++++
++
 ----
 {
 "click": "to edit",
@@ -144,6 +165,13 @@ image::enrichcase1_03a_deploy.png[,100%]
 }
 ----
 ** replace the above text with the following JSON document via a cut-n-paste
++
+++++
+<table border="0">
+<tr>
+<td border="0">ID</td><td width="300px">AnotherSampleDocument</td>
+</table>
+++++
 +
 ----
 {
