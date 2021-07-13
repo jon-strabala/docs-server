@@ -88,4 +88,4 @@ For Single Tenancy we only need a one shared  ‘Eventing Storage’ collection,
 
 If we put the put ‘Eventing Storage’ (in collections) in the same bucket as with data with non 100% residency the Evening performance can easily drop by a factor of five (5) or more.
 
-Typically the overhead of the Eventing housekeeping area "Eventing Storage" is typically quite small, just 1024 documents per Function.   However if Timers are used the size of this collection can grow to about 800 bytes x # of active timers.  As such the enclosing bucket needs to be sized appropriately.
+Typically the overhead of the Eventing housekeeping area "Eventing Storage" is quite small, just 1024 documents per Function.   However if Timers are used the size of this collection can grow to about 800 bytes x # of active timers.  As such the enclosing bucket needs to be sized appropriately.
