@@ -32,7 +32,7 @@ NOTE: The Eventing Storage keyspace, in this case *'rr100.eventing.metadata'*, i
 ** Select the keyspace *bulk*, *data*, *source*
 ** You should see no user records.
 ** Click *Add Document* in the upper right banner
-** For the *ID* in the *Create New Document* use *SampleDocument*
+** For the *ID* in the *Create New Document* dialog specify *SampleDocument*
 ** For the document body in the *Create New Document* dialog, the following text is displayed:
 +
 ----
@@ -134,7 +134,7 @@ image::enrichcase1_03a_deploy.png[,100%]
 ** Select the keyspace *bulk*, *data*, *source*
 ** You should see one user record (the one we entered at the beginning of this procedure).
 ** Click *Add Document* in the upper right banner
-** For the *ID* in the *Create New Document* use *AnotherSampleDocument*
+** For the *ID* in the *Create New Document* dialog specify *AnotherSampleDocument*
 ** For the document body in the *Create New Document* dialog, the following text is displayed:
 +
 ----
