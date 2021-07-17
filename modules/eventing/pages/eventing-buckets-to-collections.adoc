@@ -82,10 +82,8 @@ image::eventing-collections-single-tenant.jpg[,%100]
 
 image::eventing-collections-multi-tenant.jpg[,%100]
 
-To ensure the highest performance the Eventing "metadata" (now called ‘Eventing Storage’ in collections) which is for internal housekeeping should be 100% resident.  The other non-metadata bucket can have much lower residency. 
+If we put the put ‘Eventing Storage’ (in collections) in the same bucket as with data with non 100% residency the Evening performance can easily drop by a factor of five (5) or more. 
 
-For Single Tenancy we only need a one shared  ‘Eventing Storage’ collection, but for Multi Tenancy we design two "parallel" buckets as shown in the second diagram.  
+Of course you can put everything including the ‘Eventing Storage’ collection into a single bucket, if the bucket is 100% resident you will not suffer slowdowns but as the residency rate of this bucket drops you will start accessing your underlying disk for Eventing control documents (definitions, timers, and checkpoints).  This behavior is analogous to swapping to disk when your computers program is larger than your memory.
 
-If we put the put ‘Eventing Storage’ (in collections) in the same bucket as with data with non 100% residency the Evening performance can easily drop by a factor of five (5) or more.
-
-Typically the overhead of the Eventing housekeeping area "Eventing Storage" is quite small, just 1024 documents per Function.   However if Timers are used the size of this collection can grow to about 800 bytes x # of active timers.  As such the enclosing bucket needs to be sized appropriately.
+Typically the overhead of the Eventing housekeeping area "Eventing Storage" is quite small, just 1024 documents per Function and occasional check point documents.   However if Timers are used the size of this collection can grow to about 1K bytes x number of active timers (_for 1M active timers this is 1.5G bytes_).  As such the enclosing bucket holding the ‘Eventing Storage’ needs to be sized appropriately.
