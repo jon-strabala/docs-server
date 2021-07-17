@@ -72,14 +72,19 @@ The benefits of reorganizing to collections are numerous:
 * Easier migration from relational databases to Couchbase Server, since collections can be designed to correspond to pre-existing relational tables.
 * Secure isolation of different document-types, within a bucket; allowing applications to be specifically authorized to use only their appropriate subsets of data.
 
+For complete details on how to set up your keyspaces refer to xref:manage:manage-buckets/create-bucket.adoc[creating buckets] and 
+xref:manage:manage-scopes-and-collections/manage-scopes-and-collections.add[creating scopes and collections].  
+
 Eventing in the collections world can just use the _default scope and the _default collection and essentially run without and changes.  However there are opportunities for reorganizing the groupings of your data to lower the needed resources or increase throughput.
 
+[#single-tenancy]
 *Eventing with Full Collections Support: Single Tenancy*
 
 image::eventing-collections-single-tenant.jpg[,%100]
 
 *Eventing with Full Collections Support: Multi Tenancy*
 
+[#multi-tenancy]
 image::eventing-collections-multi-tenant.jpg[,%100]
 
 If we put the put ‘Eventing Storage’ (in collections) in the same bucket as with data with non 100% residency the Evening performance can easily drop by a factor of five (5) or more. 
