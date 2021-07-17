@@ -29,24 +29,23 @@ For the Eventing Storage keyspace we need to create one if missing as follows:
 
 ** Access the *Couchbase Web Console* > *Buckets* page
 ** Select the *Add Bucket* in the upper right banner. 
-** In the dialog set the "Name" of the bucket to *RR100* and set "Memory Quota" to *100* MiB.
+** In the dialog set the "Name" of the bucket to *rr100* and set "Memory Quota" to *100* MiB.
 ** Click *Add Bucket*.
 
-At this point we could use the Eventing Storage keyspace of _RR100._default._default_, for all Eventing Functions but we might want to split this up by tenants as follows:
+At this point we could use the Eventing Storage keyspace of _rr100._default._default_, for all Eventing Functions but we might want to split this up by a logical grouping (or alternatively by tenants):
 
 ** Select *Scopes & Collections* at the right of the new bucket information line.
 ** Select the *Add Scope* in the upper right banner. 
-** In the dialog set the "Name" of the Scope to *tenant01*.
+** In the dialog set the "Name" of the Scope to *eventing*.
 ** Click *Save*.
 ** Select *Add Collection* at the right of the new scope information line.
-** In the dialog set the "Name" of the Collection to *metadata*.
 ** Click *Save*.
 
 If we return to the *Couchbase Web Console* > *Buckets* page you should see two (2) buckets.
 
 image::addfunc_00_prerq_bkts.png[,100%]
 
-If we now select *Scopes & Collections* at the right of the RR100 bucket information line, then expand tenant01 you should see the metadata collection.
+If we now select *Scopes & Collections* at the right of the rr100 bucket information line, then expand eventing you should see the metadata collection.
 
 image::addfunc_00_prerq_bkts_s_c.png[,100%]
 
@@ -133,7 +132,7 @@ An Eventing Function can have no bindings, just one binding, or several bindings
 
 . In the *ADD FUNCTION* dialog, configure the following information:
  ** For the *Listen To Location* drop-downs, select *beer-sample* for bucket, *_default* for scope, and *_default* for collection.  
- ** For the *Eventing Storage* drop-downs, select *RR100* for bucket, *tenant01* for scope, and *metadata* for collection.  
+ ** For the *Eventing Storage* drop-downs, select *rr100* for bucket, *eventing* for scope, and *metadata* for collection.  
  ** Enter *my_evt_function* as the name of the Function you are creating in the *Function Name* text-box.
  ** [Optional Step] Enter text *A simple Eventing Function only prints IDs*, in the *Description* text-box.
  ** For the *Settings* option, use the default values, feel free to expand this section and inspect.
