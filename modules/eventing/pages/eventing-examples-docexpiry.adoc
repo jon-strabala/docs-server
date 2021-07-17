@@ -176,9 +176,6 @@ The new document gets displayed automatically (as this page will attempt to list
 
 . From the *Couchbase Web Console* > *Eventing* page, click *ADD FUNCTION*, to add a new Function.
 The *ADD FUNCTION* dialog appears.
-
-. From the *Couchbase Web Console* > *Eventing* page, click *ADD FUNCTION*, to add a new Function.
-The *ADD FUNCTION* dialog appears.
 . In the *ADD FUNCTION* dialog, for individual Function elements provide the below information:
  ** For the *Listen To Location* drop-down, select *bulk*, *data*, *source* as the keyspace.
  ** For the *Eventing Storage* drop-down, select *rr100*, *eventing*, *metadata* as the keyspace.
