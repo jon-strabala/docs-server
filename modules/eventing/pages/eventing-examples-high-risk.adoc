@@ -27,13 +27,14 @@ the Eventing handler executes user-defined code to respond to the change in real
 For this example, two (2) buckets *'bulk'* and *'rr100'* are required where the later is intended to be 100% resident.  
 Create the buckets with a minimum size of 100MB. 
 For information on buckets, see xref:manage:manage-buckets/create-bucket.adoc[Create a Bucket].
-Within the buckets we need three (3) keyspaces *'bulk.data.register'*, *'bulk.data.review'*, and *'rr100.eventing.metadata'*. 
+Within the buckets we need three (3) keyspaces *'bulk.data.register'*, *'bulk.data.review'*, and *'rr100.eventing.metadata'* 
+(we loosely follow this xref:eventing-Terminologies.adoc#single-tenancy[organization]).
 
 _If you run a version of Couchbase prior to 7.0 you can just create the buckets *'register'*, *'review'*, and *'metadata'* and run this example.  Furthermore if your cluster was subsequently upgraded from say 6.6.2 to 7.0 your data would be moved to *'register._default._default'*, *'review._default._default'*, and *'metadata._default._default'* and your Eventing Function would be seamlessly upgraded to use the new keyspaces and continue to run correctly._
 
 // TODO7X - need to check/fix this (buckets, scopes, collections)
 For complete details on how to set up your keyspaces refer to xref:manage:manage-buckets/create-bucket.adoc[creating buckets] and 
-xref:manage:manage-scopes-and-collections/manage-scopes-and-collections.add[creating scopes and collections].  
+xref:manage:manage-scopes-and-collections/manage-scopes-and-collections.adoc[creating scopes and collections].  
 
 NOTE: The Eventing Storage keyspace, in this case *'rr100.eventing.metadata'*, is for the sole use of the Eventing system, do not add, modify, or delete documents from it.  In addition do not drop or flush or delete the containing bucket (or delete this collection) while you have any deployed Eventing functions. In a single tenancy deployment this collection can be shared with other Eventing functions.
 
