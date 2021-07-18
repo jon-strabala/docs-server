@@ -139,19 +139,30 @@ SELECT COUNT(*) FROM `travel-sample`.`_default`.`_default` where type = 'airport
 ----
 INSERT INTO `bulk`.`data`.`source`(KEY _k, VALUE _v)
     SELECT META().id _k, _v FROM `travel-sample`.`_default`.`_default` _v WHERE type="airport";
----- 
+----
+
+. Now switch to the access the *Couchbase Web Console* > *Eventing* page. Expand the function *archive_before_expiry* and not the count under successes (1,968)
++
+image::docarchive_cnta.png[,100%]
 
 . Now switch to the access the *Couchbase Web Console* > *Buckets* page. The Buckets in the UI the `rr100`.`eventing`.`metadata` 
 collection will have 1280 documents related to the Eventing function and an additional 2 x 1,968 (ctx+alm) + 256 (root) additional documents related to the active timers.
 The key thing is that you should see 1,968 documents in the `bulk`.`data`.`source` collection (inserted via our N1QL query).
 +
 image::docarchive_04_buckets.png[,100%]
-+
 
-. Now wait a nine (9) minutes, look at the Buckets in the UI again you will see 1,968 documents in the 'source' bucket 
+. Now wait a a bit over eight (8) minutes, look at the Buckets in the UI again you will see 1,968 documents in the 'source' bucket 
 and 1,968 documents in the 'target bucket'.
 +
 image::docarchive_05_buckets.png[,100%]
++
+The details under Bucket "bulk" scope "data":
++
+image::docarchive_07_preexpired.png[,100%]
+
+. Now switch to the access the *Couchbase Web Console* > *Eventing* page. Expand the function *archive_before_expiry* and not the count under successes (3,936)
++
+image::docarchive_cntb.png[,100%]
 
 . Wait a few more minutes (a bit more than two minutes) past the 120 second window, then check the documents within the 
  `bulk`.`data`.`source` collection, you will find that none of the documents will be accessible as they have expired due to the enclosing bucket's defined TTL. 
@@ -159,6 +170,10 @@ image::docarchive_05_buckets.png[,100%]
 NOTE: If you don’t actually try to access the documents in the `bulk`.`data`.`source` collection the UI may still indicate they still exist until the expiry pager removes the tombstone for the deleted or expired documents (or an attempt to access them is made).
 +
 image::docarchive_06_buckets.png[,100%]
++
+The details under Bucket "bulk" scope "data":
++
+image::docarchive_08_expired.png[,100%]
 
 . Cleanup, go to the Eventing portion of the UI and undeploy the Function *archive_before_expiry*, this will remove the 1280 documents for each function from the 'rr100.eventing.metadata' collection (in the Bucket view of the UI). Remember you may only delete the 'rr100.eventing.metadata' keyspace if there are no deployed Eventing Functions.  The collection *'bulk.data.source'* has a 'Bucket Max Time-To-Live' or TTL of 600 seconds so drop this collection to prevent issues running other examples.
 
