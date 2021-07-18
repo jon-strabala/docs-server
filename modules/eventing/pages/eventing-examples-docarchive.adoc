@@ -45,11 +45,14 @@ NOTE: The Eventing Storage keyspace, in this case *'rr100.eventing.metadata'*, i
 ** Check *travel-sample* checkbox.
 ** Click *Load Sample Data*.
 
-When you created the collection *'bulk.data.source'* should have set a 'Bucket Max Time-To-Live' or TTL of 600 seconds.  
-If you didn't then drop the collection and recreate it with the needed TTL.
+. Verify your Buckets you should have three (3) total and verfiy *'bulk.data.source'* has a TTL of 600 seconds.
++
+image::docarchive_00_bsettings.png[,484]
+** Click *Scopes & Collections* on the left, Click the scope *data* on the right to expand it to show the collections.
+When you created the collection *'bulk.data.source'* it should have had a 'Bucket Max Time-To-Live' or TTL of 600 seconds.  
+If you didn't then drop the collection and recreate it with the needed TTL of 600.
 +
 image::docarchive_01_bsettings.png[,484]
-** Click *Save Changes*.
 
 . From the *Couchbase Web Console* > *Eventing* page, click *ADD FUNCTION*, to add a new Function.
 The *ADD FUNCTION* dialog appears.
@@ -58,7 +61,7 @@ The *ADD FUNCTION* dialog appears.
  ** For the *Eventing Storage* drop-down, select *rr100*, *eventing*, *metadata* as the keyspace.
  ** Enter *archive_before_expiry* as the name of the Function you are creating in the *Function Name* text-box.
  ** Leave the "Deployment Feed Boundary" as Everything.
- ** [Optional Step] Enter text *Function that archives all documents in a collection from a collection in a bucket awith a TTL set*, in the *Description* text-box.
+ ** [Optional Step] Enter text *Function that archives all documents in a collection from a collection in a bucket with a TTL set*, in the *Description* text-box.
  ** For the *Settings* option, use the default values.
  ** For the *Bindings* option, add two bindings.
  *** For the first binding, select "bucket alias", specify *src* as the "alias name" of the collection, 
@@ -99,7 +102,7 @@ function OnUpdate(doc, meta) {
 function DocTimerCallback(context) {
     // context is just our key to the document that will expire in 120 sec.
     var doc = src[context]; 
-    if (doc !== undefined) {
+    if (doc) {
         // create a new document with the same ID but in the target collection
         // log('DocTimerCallback: copy src to tgt for DocId:', context);
         tgt[context] = doc;
