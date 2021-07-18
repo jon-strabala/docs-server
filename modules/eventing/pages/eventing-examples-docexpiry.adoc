@@ -182,7 +182,7 @@ The *ADD FUNCTION* dialog appears.
  ** For the *Eventing Storage* drop-down, select *rr100*, *eventing*, *metadata* as the keyspace.
  ** Enter *add_timer_before_expiry* as the name of the Function you are creating in the *Function Name* text-box.
  ** Leave the "Deployment Feed Boundary" as Everything.
- ** [Optional Step] Enter text *Function that adds timer to fire before document expiry, in the *Description* text-box.
+ ** [Optional Step] Enter text *Function that adds timer to fire before document expiry*, in the *Description* text-box.
  ** For the *Settings* option, use the default values.
  ** For the *Bindings* option, add two bindings.
  *** For the first binding, select "bucket alias", specify *src* as the "alias name" of the collection, 
