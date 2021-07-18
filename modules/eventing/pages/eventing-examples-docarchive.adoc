@@ -156,7 +156,7 @@ and 1,968 documents in the 'target bucket'.
 +
 image::docarchive_05_buckets.png[,100%]
 +
-The details under Bucket "bulk" scope "data":
+The details under Bucket "bulk" scope "data" show that we have archive the 1,968 documents and the orginal document set from our N1QL statment has expired:
 +
 image::docarchive_07_preexpired.png[,100%]
 
