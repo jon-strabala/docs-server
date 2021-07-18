@@ -329,4 +329,4 @@ image::enrichcase2_03a_deploy.png[,100%]
 
 *Cleanup (both Case 1 and Case 2)*:
 
-Cleanup, go to the Eventing portion of the UI and undeploy the Function(s) case_1_enrich_ips and case_2_enrich_ips, this will remove the 1024 documents for each function from the 'rr100.eventing.metadata' colection (in the Bucket view of the UI). Remember you may only delete the 'rr100.eventing.metadata' keyspace if there are no deployed Eventing Functions.
+Cleanup, go to the Eventing portion of the UI and undeploy the Function(s) case_1_enrich_ips and case_2_enrich_ips, this will remove the 1024 documents for each function from the 'rr100.eventing.metadata' collection (in the Bucket view of the UI). Remember you may only delete the 'rr100.eventing.metadata' keyspace if there are no deployed Eventing Functions.
