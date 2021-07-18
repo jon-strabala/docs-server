@@ -47,12 +47,12 @@ NOTE: The Eventing Storage keyspace, in this case *'rr100.eventing.metadata'*, i
 
 . Verify your Buckets you should have three (3) total and verfiy *'bulk.data.source'* has a TTL of 600 seconds.
 +
-image::docarchive_00_bsettings.png[,484]
+image::docarchive_00_bsettings.png[,100%]
 ** Click *Scopes & Collections* on the left, Click the scope *data* on the right to expand it to show the collections.
 When you created the collection *'bulk.data.source'* it should have had a 'Bucket Max Time-To-Live' or TTL of 600 seconds.  
 If you didn't then drop the collection and recreate it with the needed TTL of 600.
 +
-image::docarchive_01_bsettings.png[,484]
+image::docarchive_01_bsettings.png[,100%]
 
 . From the *Couchbase Web Console* > *Eventing* page, click *ADD FUNCTION*, to add a new Function.
 The *ADD FUNCTION* dialog appears.
