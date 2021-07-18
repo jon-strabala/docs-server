@@ -170,7 +170,10 @@ For information on the Couchbase Java SDK, refer to xref:java-sdk:hello-world:st
 . You now have a document in collection 'source' (keyspace `bulk`.`data`.`source`) with an expiration set. 
 
 . To verify that your new document was created, access the *Couchbase Web Console* > *Documents* page and click the *Documents* then select the keyspace `bulk`.`data`.`source`.
-The new document gets displayed automatically (as this page will attempt to list the first few items).
+The new document gets displayed automatically (as this page will attempt to list the first few items). You will see one (1) document in the `bulk`.`data`.`source` keyspace (this will disappear on the document's expiry of 10 minutes).
++
+image::docexpiry_05_buckets.png[,100%]
+
 . [Optional Step] Click on the document's id, *SampleDocument2* to view the documents Data and also the documents Metadata information.  Note that the "expiration" field in the Metadata is non-zero (set to a  Unix timestamp in seconds since epoch).
 . From the *Couchbase Web Console* > *Eventing* page, click *ADD FUNCTION*, to add a new Function.
 The *ADD FUNCTION* dialog appears.
@@ -257,7 +260,7 @@ You should see four log lines:
 +
 The final result, is a new document containing a copy of the data from the original, named *SourceDocument2* being written to the collecion 'target' with the same Key in the keyspace `bulk`.`data`.`target`.
 
-. Now look at the *Documents* in the UI again you will see one (1) document in the `bulk`.`data`.`source` keyspace (this will dispear on the document's expiry).
+. Now look at the *Documents* in the UI again you will see one (1) document in the `bulk`.`data`.`source` keyspace (this will disappear on the document's expiry of 10 minutes).
 +
 image::docexpiry_05_buckets.png[,100%]
 
