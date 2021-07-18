@@ -142,7 +142,7 @@ INSERT INTO `bulk`.`data`.`source`(KEY _k, VALUE _v)
 ---- 
 
 . Now switch to the access the *Couchbase Web Console* > *Buckets* page. The Buckets in the UI the `rr100`.`eventing`.`metadata` 
-collection will have 1280 documents related to the Eventing function and "about" 2 x 1,968 + 1 additional documents related to the active timers.
+collection will have 1280 documents related to the Eventing function and an additional 2 x 1,968 (ctx+alm) + 256 (root) additional documents related to the active timers.
 The key thing is that you should see 1,968 documents in the `bulk`.`data`.`source` collection (inserted via our N1QL query).
 +
 image::docarchive_04_buckets.png[,100%]
