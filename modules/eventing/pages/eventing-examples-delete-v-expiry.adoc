@@ -224,7 +224,7 @@ image::del_v_expiry_03a_deploy.png[,100%]
 * The expiry pager is run (default every 60 minutes).
 * Compaction is run. 
 
-. Therefore we first wait the 10 minute period from the creation of SampleDocument2 and then we will try to access the document to expedite the expiry occurrence.  
+. Therefore we first wait the full 10 minute period from the creation of SampleDocument2 and then we will try to access the document to expedite the expiry occurrence.  
 
 . Access the *Couchbase Web Console* > *Buckets* page.
 ** You may see document count of one or zero depending in the Bucket *bulk* if the expiry pager has run. 
@@ -234,7 +234,7 @@ image::del_v_expiry_04_view_bkt.png[,100%,align=left]
 . Click on the *Documents* in the UI  you will see one (1) document in the `bulk`.`data`.`source` keyspace (this will disappear on the document's expiry of 10 minutes).
 If the expiration on the document SampleDocument2 has occurred there will be no documents found.
 +
-image::del_v_expiry_04a_view_doc.png[,100%,align=left]
+image::del_v_expiry_04b_view_doc.png[,100%,align=left]
 
 . Access the *Couchbase Web Console* > *Buckets* page for a second time.  
 ** You should see the document count is zero for the bucket *source* as we have attempted to access the item and it has been recognized and marked as an expired tombstone.
@@ -250,17 +250,23 @@ image::del_v_expiry_04_expiration.png[,100%,align=left]
 ** You should see that the document has expired.
 +
 ----
-2020-08-02T17:28:02.635-07:00 [INFO] "doc expired:" "SampleDocument2"
+2021-07-17T18:58:54.269-07:00 [INFO] "doc expired:" "SampleDocument2" 
 ----
 +
 image::del_v_expiry_05_log_expired.png[,500,align=left]
 
-. Now let's create another document and perform a normal delete on it. Access the *Couchbase Web Console* > *Buckets* page and click the *Documents* link of the *source* bucket.
+. Now let's create another document and perform a normal delete on it. Access the *Couchbase Web Console* > *Buckets* page and click the *Scopes and Collections* link of the *bulk* bucket.
+** Click *Documents* in the upper right banner for the *data* scope.
+** Select the keyspace *bulk*, *data*, *source*
 ** You should see no user records.
-** Click *Add Document* in the upper right banner.
-** In the *Add Document* dialog, specify the name *SampleDocument3* as the *New Document ID*.
-** Click *Save*.
-** In the *Edit Document* dialog, the following text is displayed:
+** Click *Add Document* in the upper right banner
+** For the *ID* in the *Create New Document* dialog specify *SampleDocument*
++
+----
+ID [ SampleDocument3        ]
+----
++
+** For the document body in the *Create New Document* dialog, the following text is displayed:
 +
 ----
 {
@@ -268,6 +274,7 @@ image::del_v_expiry_05_log_expired.png[,500,align=left]
 "with JSON": "there are no reserved field names"
 }
 ----
+** just keep the above text
 ** Click *Save*.
 
 . Now click the trash can icon to delete the *SampleDocument3* you just created.  Select *Continue* to confirm the deletion.
@@ -281,11 +288,9 @@ image::del_v_expiry_06_deletion.png[,100%,align=left]
 ** Here we see the document was deleted.
 +
 ----
-2020-08-02T17:29:25.223-07:00 [INFO] "doc deleted:" "SampleDocument3"
+2021-07-17T19:04:32.069-07:00 [INFO] "doc deleted:" "SampleDocument3" 
 ----
 +
 image::del_v_expiry_06_log_deleted.png[,500,align=left]
 
 . Cleanup, go to the Eventing portion of the UI and undeploy the Function *delete_v_expiry*, this will remove the 1280 documents for each function from the 'rr100.eventing.metadata' colection (in the Bucket view of the UI). Remember you may only delete the 'rr100.eventing.metadata' keyspace if there are no deployed Eventing Functions.
-
-
