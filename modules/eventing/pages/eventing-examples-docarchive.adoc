@@ -156,7 +156,7 @@ and 1,968 documents in the 'target bucket'.
 +
 image::docarchive_05_buckets.png[,100%]
 +
-The details under Bucket "bulk" scope "data" show that we have archive the 1,968 documents and the orginal document set from our N1QL statment has expired:
+The details under Bucket "bulk" scope "data" show that we have archived the 1,968 documents from the "source" collection to the "target" collection:
 +
 image::docarchive_07_preexpired.png[,100%]
 
@@ -171,7 +171,7 @@ NOTE: If you don’t actually try to access the documents in the `bulk`.`data`.`
 +
 image::docarchive_06_buckets.png[,100%]
 +
-The details under Bucket "bulk" scope "data":
+The details under Bucket "bulk" scope "data" show that the 1,968 archived documents remain in the "target" collection but the orginal documents in the "source" collection have expired:
 +
 image::docarchive_08_expired.png[,100%]
 
